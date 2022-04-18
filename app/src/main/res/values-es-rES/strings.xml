@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PintuApp</string>
+    <string name="home">Inicio</string>
+    <string name="menu">Menu</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
+    <string name="notification">Notificaciones</string>
+    <string name="help">Ayuda</string>
+    <string name="order">Pedidos</string>
+    <string name="favourites">Favoritos</string>
+    <string name="account">Cuenta</string>
+</resources>
