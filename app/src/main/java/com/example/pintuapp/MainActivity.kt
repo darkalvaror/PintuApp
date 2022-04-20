@@ -1,15 +1,24 @@
 package com.example.pintuapp
 
+import android.content.Context
+import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.pintuapp.databinding.ActivityMainBinding
+import com.example.pintuapp.databinding.HeaderLayoutBinding
 import com.example.pintuapp.fragments.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var bindingHeader: HeaderLayoutBinding
     private lateinit var toggle: ActionBarDrawerToggle
     private var homeFragment: Fragment = HomeFragment()
     private var notificationFragment: Fragment = NotificationFragment()
@@ -17,16 +26,28 @@ class MainActivity : AppCompatActivity() {
     private var orderFragment: Fragment = OrdersFragment()
     private var favouriteFragment: Fragment = FavouriteFragment()
     private var accountFragment: Fragment = AccountFragment()
+    private var loginSuccess: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        bindingHeader = HeaderLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
-        binding.drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+        bindingHeader.emailTextView.text = "Texto de ejemplo"
+        bindingHeader.user.text = "Nombre del usuario"
+        bindingHeader.imageView.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.google_icon))
 
+
+
+        val bundle = intent.extras
+        if (bundle != null) {
+            val email = bundle.getString("email")
+            val googleLogin = bundle.getBoolean("googleLogin")
+            val emailHeader = (binding.navigationView.getHeaderView(0).findViewById(R.id.emailTextView) as TextView)
+            emailHeader.text = email
+            val nameHeader = (binding.navigationView.getHeaderView(0).findViewById(R.id.user) as TextView)
+        }
         makeCurrentFragment(homeFragment)
 
         binding.animatedBottomBar.onTabSelected = {
@@ -43,10 +64,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun makeCurrentFragment(fragment : Fragment) = supportFragmentManager.beginTransaction().apply {
-        replace(R.id.frame_container, fragment)
-        commit()
+        val bundle = intent.extras
+        if (bundle != null) {
+            loginSuccess = bundle.getBoolean("loginSucces")
+        }
+        if((fragment == orderFragment || fragment == favouriteFragment || fragment == accountFragment) && !loginSuccess) {
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(intent)
+        } else {
+            replace(R.id.frame_container, fragment)
+            commit()
+        }
     }
 
     private fun openCloseNavigationDrawer(): Boolean {
@@ -55,6 +84,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.drawerLayout.openDrawer(GravityCompat.END)
         }
+
+        val hView:View = binding.navigationView.getHeaderView(0)
+
         return true
     }
 
@@ -70,5 +102,4 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
 }

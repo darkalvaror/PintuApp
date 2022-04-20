@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1071137173410",
+    "project_id": "pintuapp-b6345",
+    "storage_bucket": "pintuapp-b6345.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071137173410:android:d92a8a02f032e276b30cfb",
+        "android_client_info": {
+          "package_name": "com.example.pintuapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071137173410-054lbea399imc3u99rksqnl8a0tim6l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pintuapp",
+            "certificate_hash": "23d41d0c6135900fc1b828291ae8f1ce9e95d978"
+          }
+        },
+        {
+          "client_id": "1071137173410-fig6lv8nnivjq1qph1dgj1jimhrmhrhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUa_ins5St6N11Eyp7jXdobRosssgLS3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071137173410-fig6lv8nnivjq1qph1dgj1jimhrmhrhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

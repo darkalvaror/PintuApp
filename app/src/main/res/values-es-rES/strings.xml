@@ -10,4 +10,19 @@
     <string name="order">Pedidos</string>
     <string name="favourites">Favoritos</string>
     <string name="account">Cuenta</string>
+    <string name="text_subrayado">He olvidado la contraseña</string>
+    <string name="new_cliente">¿Eres nuevo? Registrate</string>
+    <string name="create_account">Crear una cuenta</string>
+    <string name="sign_in">Iniciar sesión</string>
+    <string name="Sign_in_with_google">Iniciar sesión con Google</string>
+    <string name="or">O</string>
+    <string name="password">Contraseña</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellidos</string>
+    <string name="repeat_password">Repetir contraseña</string>
+    <string name="privacity_politics">He leido y acepto la <i><u>política de privacidad</u></i></string>
+    <string name="okay">Aceptar</string>
+    <string name="errorCreatingUser">Error al crear el nuevo usuario</string>
+    <string name="accept_error">Marque la casilla de las políticas de privacidad</string>
+    <string name="completeAllTheFields">Completa todos los campos</string>
 </resources>

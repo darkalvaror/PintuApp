@@ -9,4 +9,28 @@
     <string name="order">Order</string>
     <string name="favourites">Favourites</string>
     <string name="account">Account</string>
+    <string name="text_subrayado"><u>Forgotten password?</u></string>
+    <string name="new_cliente">You are new? Register</string>
+    <string name="create_account">Create a new account</string>
+    <string name="sign_in">Sign in</string>
+    <string name="Sign_in_with_google">Sign in with Google</string>
+    <string name="or">OR</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="privacity_politics">I already read the <u>privacity politics</u></string>
+    <string name="okay">OKAY</string>
+    <string name="errorCreatingUser">Error creating the new user"</string>
+    <string name="accept_error">Please check the privacity politics </string>
+    <string name="completeAllTheFields">Complete all the fields</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>"
 </resources>

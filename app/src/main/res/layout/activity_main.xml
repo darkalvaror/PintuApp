@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="#B9D8D7D7"
     android:id="@+id/drawerLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +15,7 @@
             android:id="@+id/animatedBottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/design_default_color_secondary"
             app:abb_indicatorAppearance="square"
             app:abb_indicatorColor="@color/orange"
             app:abb_indicatorHeight="4dp"
