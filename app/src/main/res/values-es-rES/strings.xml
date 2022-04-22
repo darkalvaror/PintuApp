@@ -25,4 +25,9 @@
     <string name="errorCreatingUser">Error al crear el nuevo usuario</string>
     <string name="accept_error">Marque la casilla de las políticas de privacidad</string>
     <string name="completeAllTheFields">Completa todos los campos</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="errorLogin">Error al iniciar sesión</string>
+    <string name="done">Aceptar</string>
+    <string name="email_is_already_register">El email ya está en uso</string>
 </resources>

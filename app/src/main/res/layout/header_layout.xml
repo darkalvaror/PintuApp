@@ -46,4 +46,15 @@
         app:srcCompat="@drawable/ic_launcher_foreground"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/signOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#DC1919"
+        android:src="@drawable/ic_baseline_power_settings_new_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
