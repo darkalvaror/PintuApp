@@ -33,18 +33,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <com.github.abdularis.civ.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="96dp"
         android:layout_height="85dp"
         app:layout_constraintBottom_toTopOf="@+id/user"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:highlightColor="#80808080"
+        android:src="@drawable/logo"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/black"
+        />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/signOut"
@@ -52,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="#DC1919"
+        android:background="#00FFFFFF"
         android:src="@drawable/ic_baseline_power_settings_new_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

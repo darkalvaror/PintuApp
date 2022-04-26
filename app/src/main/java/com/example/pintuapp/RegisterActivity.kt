@@ -19,7 +19,6 @@ class RegisterActivity : AppCompatActivity() {
 
         //Setup
         setup()
-
         binding.backButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -33,31 +32,37 @@ class RegisterActivity : AppCompatActivity() {
                 if (binding.textInputEdit.text!!.isEmpty() || binding.textInputEdit2.text!!.isEmpty() || binding.textInputEdit3.text!!.isEmpty() || binding.textInputEdit4.text!!.isEmpty() || binding.textInputEdit6.text!!.isEmpty()) {
                     showAlert(getString(R.string.completeAllTheFields))
                 } else {
-                    db.collection("Usuario").document(binding.textInputEdit3.text.toString()).get()
-                        .addOnSuccessListener {
-                            if (it.exists()) {
-                                showAlert(getString(R.string.email_is_already_register))
-                            } else {
-                                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                                    binding.textInputEdit3.text.toString(),
-                                    binding.textInputEdit4.text.toString()
-                                ).addOnCompleteListener {
-                                    if (it.isSuccessful) {
-                                        showHome(it.result.user?.email.toString())
-                                        db.collection("Usuario")
-                                            .document(it.result.user?.email.toString()).set(
-                                            hashMapOf(
-                                                "Nombre" to binding.textInputEdit.text.toString(),
-                                                "Apellidos" to binding.textInputEdit2.text.toString(),
-                                                "Email" to binding.textInputEdit3.text.toString()
-                                            )
-                                        )
-                                    } else {
-                                        showAlert(getString(R.string.errorCreatingUser))
+                    if(binding.textInputEdit4.text.toString() == binding.textInputEdit6.text.toString()) {
+                        db.collection("Usuario").document(binding.textInputEdit3.text.toString()).get()
+                            .addOnSuccessListener {
+                                if (it.exists()) {
+                                    showAlert(getString(R.string.email_is_already_register))
+                                } else {
+                                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                                        binding.textInputEdit3.text.toString(),
+                                        binding.textInputEdit4.text.toString()
+                                    ).addOnCompleteListener {
+                                        if (it.isSuccessful) {
+                                            showHome(it.result.user?.email.toString())
+                                            val img_url = "https://drive.google.com/file/d/1pjzdFUnQuJ1ZGRPK3z4PpTRos4GDeRzb/view?usp=sharing"
+                                            db.collection("Usuario")
+                                                .document(it.result.user?.email.toString()).set(
+                                                    hashMapOf(
+                                                        "Nombre" to binding.textInputEdit.text.toString(),
+                                                        "Apellidos" to binding.textInputEdit2.text.toString(),
+                                                        "Email" to binding.textInputEdit3.text.toString(),
+                                                        "Img_url" to img_url
+                                                    )
+                                                )
+                                        } else {
+                                            showAlert(getString(R.string.errorCreatingUser))
+                                        }
                                     }
                                 }
                             }
-                        }
+                    } else {
+                        showAlert(getString(R.string.check_password))
+                    }
                 }
             } else {
                 showAlert(getString(R.string.accept_error))

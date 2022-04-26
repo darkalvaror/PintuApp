@@ -3,6 +3,10 @@ package com.example.pintuapp
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,11 +21,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val db = FirebaseFirestore.getInstance()
+    private var imgUrl = ""
+    private var userName = ""
+    private var userSurname = ""
+    private var email = ""
+    private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.progressBar.visibility = View.GONE
 
         setup()
     }
@@ -36,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.textInputEdit2.text.toString()
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showHome(it.result.user?.email.toString(), false, "")
+                        showHome(it.result.user?.email.toString(), false)
                     } else {
                         showAlert(getString(R.string.errorLogin))
                     }
@@ -65,13 +76,13 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this, msgError, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showHome(email: String, googleLogin: Boolean, photoUrl: String) {
+    private fun showHome(email: String, googleLogin: Boolean) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("email", email)
             putExtra("googleLogin", googleLogin)
             putExtra("loginSucces", true)
-            putExtra("photoUrl", photoUrl)
         }
+
         startActivity(intent)
         finish()
     }
@@ -85,27 +96,57 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 100) {
+        if (requestCode == 100) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+            binding.progressBar.visibility = View.VISIBLE
 
             try {
                 val account = task.getResult(ApiException::class.java)
 
-                if(account != null) {
+                if (account != null) {
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                        if(it.isSuccessful) {
-                            showHome(account.email ?: "", true, account.photoUrl.toString())
-                            db.collection("Usuario").document(account.email.toString()).set(
-                                hashMapOf("Nombre" to account.givenName.toString(),
-                                "Apellidos" to account.familyName.toString(),
-                                "Email" to account.email.toString()))
-                        } else {
-                            showAlert(getString(R.string.errorLogin))
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                userName = account.givenName.toString()
+                                userSurname = account.familyName.toString()
+                                email = account.email.toString()
+                                imgUrl = account.photoUrl.toString()
+                                showAlert(getString(R.string.creating_user))
+
+                                db.collection("Usuario").document(email).get().addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val document = task.result
+                                        if (document != null) {
+                                            if (!document.exists()) {
+                                                db.collection("Usuario").document(email).set(
+                                                    hashMapOf("Nombre" to userName,
+                                                    "Apellidos" to userSurname,
+                                                    "Email" to email,
+                                                    "Img_url" to imgUrl)
+                                                )
+
+
+                                                handler = Handler(Looper.myLooper()!!)
+
+                                                handler.postDelayed({
+                                                    showHome(email, true)
+                                                }, 600)
+                                            } else {
+                                                showHome(email, true)
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } else {
+                                showAlert(getString(R.string.errorLogin))
+                            }
                         }
-                    }
                 }
-            } catch(e: ApiException) {
+            } catch (e: ApiException) {
                 showAlert(e.toString())
             }
 

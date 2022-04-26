@@ -30,4 +30,13 @@
     <string name="errorLogin">Error al iniciar sesión</string>
     <string name="done">Aceptar</string>
     <string name="email_is_already_register">El email ya está en uso</string>
+    <string name="elimanated_account">Eliminar tu cuenta permanentemente</string>
+    <string name="account_settings">Ajustes de cuenta</string>
+    <string name="phone_number">Número de teléfono</string>
+    <string name="creditCard_number">Número de tarjeta de crédito</string>
+    <string name="save_change">Guardar cambios</string>
+    <string name="administrator_mode">Modo administrador</string>
+    <string name="check_password">Revisa la contraseña, no son la misma</string>
+    <string name="creating_user">Creando usuario, espere...</string>
+    <string name="insert_url">Inserte la url</string>
 </resources>

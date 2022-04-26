@@ -1,60 +1,109 @@
 package com.example.pintuapp.fragments
 
+import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.pintuapp.MainActivity
 import com.example.pintuapp.R
+import com.example.pintuapp.databinding.FragmentAccountBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AccountFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AccountFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentAccountBinding
+    private val db = FirebaseFirestore.getInstance()
+    private var email: String? = null
+    private var photoUrl: String? = ""
+    private lateinit var handler: Handler
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private fun onBackPressed() {
+        val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false)
+    ): View {
+        binding = FragmentAccountBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AccountFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AccountFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val prefs =
+            activity?.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        email = prefs?.getString("email", null)
+
+        binding.deleteButton.setOnClickListener {
+            db.collection("Usuario").document(email.toString()).delete()
+
+            handler = Handler(Looper.myLooper()!!)
+            handler.postDelayed({
+                val user = FirebaseAuth.getInstance().currentUser
+                user?.delete()?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "User account deleted.")
+                    }
                 }
+
+                prefs!!.edit().clear().apply()
+
+                FirebaseAuth.getInstance().signOut()
+                onBackPressed()
+            }, 1000)
+        }
+
+        db.collection("Usuario").document(email.toString()).get().addOnSuccessListener {
+            binding.nameText.setText(it.get("Nombre") as String?)
+            binding.surnameText.setText(it.get("Apellidos") as String?)
+            binding.emailText.setText(it.get("Email") as String?)
+            if (!(it.get("Telefono") as String?).isNullOrEmpty()) {
+                binding.phoneText.setText(it.get("Telefono") as String?)
             }
+            if (!(it.get("Tarjeta") as String?).isNullOrEmpty()) {
+                binding.creditCardNumber.setText(it.get("Tarjeta") as String)
+            }
+            photoUrl = it.get("Img_url") as String?
+        }
+
+        binding.saveButton.setOnClickListener {
+            if ((binding.phoneText.text).isNullOrEmpty()) {
+                binding.phoneText.setText("000000000")
+            }
+            if ((binding.creditCardNumber.text).isNullOrEmpty()) {
+                binding.creditCardNumber.setText("0000000000000000")
+            }
+
+            if (binding.nameText.text.toString().isEmpty()
+                || binding.surnameText.text.toString().isEmpty()
+                || binding.emailText.text.toString().isEmpty()
+            ) {
+                Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+            } else {
+                db.collection("Usuario").document(email.toString()).set(
+                    hashMapOf(
+                        "Nombre" to binding.nameText.text.toString(),
+                        "Apellidos" to binding.surnameText.text.toString(),
+                        "Email" to binding.emailText.text.toString(),
+                        "Telefono" to binding.phoneText.text.toString(),
+                        "Tarjeta" to binding.creditCardNumber.text.toString(),
+                        "Img_url" to photoUrl.toString()
+                    )
+                )
+            }
+        }
     }
 }

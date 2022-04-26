@@ -68,6 +68,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
 
-    //Picasso
+    //Picasso y CircularImageView
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
+    implementation 'com.github.abdularis:CircularImageView:1.5'
+
 }
