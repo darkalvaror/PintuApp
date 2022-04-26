@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         session()
 
         val bundle = intent.extras
-
         if (bundle != null || loginSuccess) {
             if (bundle != null) {
                 email = bundle.getString("email").toString()
