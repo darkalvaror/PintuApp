@@ -42,4 +42,5 @@
     <string name="different_account">Cancelar</string>
     <string name="biometric_auth">Acceso biométrico</string>
     <string name="change_img">Cambiar imagen</string>
+    <string name="press_again">Presione atrás otra vez para salir</string>
 </resources>
