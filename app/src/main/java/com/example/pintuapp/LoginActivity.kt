@@ -113,7 +113,6 @@ class LoginActivity : AppCompatActivity() {
                                 userSurname = account.familyName.toString()
                                 email = account.email.toString()
                                 imgUrl = account.photoUrl.toString()
-                                showAlert(getString(R.string.creating_user))
 
                                 db.collection("Usuario").document(email).get().addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
@@ -126,10 +125,9 @@ class LoginActivity : AppCompatActivity() {
                                                     "Email" to email,
                                                     "Img_url" to imgUrl)
                                                 )
-
+                                                showAlert(getString(R.string.creating_user))
 
                                                 handler = Handler(Looper.myLooper()!!)
-
                                                 handler.postDelayed({
                                                     showHome(email, true)
                                                 }, 600)

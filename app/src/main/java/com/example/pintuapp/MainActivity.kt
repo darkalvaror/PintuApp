@@ -22,6 +22,7 @@ import com.example.pintuapp.fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.NonCancellable.cancel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private var userSurname: String? = ""
     private var imgUrl: String? =""
     private val db = FirebaseFirestore.getInstance()
+    private var backPressedTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,8 +86,8 @@ class MainActivity : AppCompatActivity() {
                 editText.setText(imgUrl)
 
                 with(builder) {
-                    setTitle("Change image")
-                    setPositiveButton("OK") { dialog, which ->
+                    setTitle(getString(R.string.change_img))
+                    setPositiveButton(getString(R.string.okay)) { dialog, which ->
                         if (!editText.text.isNullOrEmpty()) {
                             db.collection("Usuario").document(email.toString()).set(
                                 hashMapOf("Nombre" to userName,
@@ -96,11 +98,11 @@ class MainActivity : AppCompatActivity() {
                             finish()
                             startActivity(Intent(context, MainActivity::class.java))
                         } else {
-                            Toast.makeText(context, "msgError", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, getString(R.string.completeAllTheFields), Toast.LENGTH_SHORT).show()
                         }
 
                     }
-                    setNegativeButton("Cancel"){ dialog, which ->
+                    setNegativeButton(getString(R.string.different_account)){ dialog, which ->
                         Log.d("Main", "Negative button clicked")
                     }
                     setView(dialogLayout)
@@ -195,11 +197,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         if (loginSuccess && signOut) {
             loginSuccess = false
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        } else if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed()
+        } else {
+            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show()
         }
+        backPressedTime = System.currentTimeMillis()
     }
 }

@@ -42,4 +42,8 @@
     <string name="administrator_mode">" Administrator mode"</string>
     <string name="check_password">Check the password, are not the same</string>
     <string name="creating_user">Creating user, wait a moment...</string>
+    <string name="biometric_auth">Biometric authentication</string>
+    <string name="different_account">Cancel</string>
+    <string name="insert_url">Insert url</string>
+    <string name="change_img">Change image</string>
 </resources>

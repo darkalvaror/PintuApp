@@ -39,4 +39,7 @@
     <string name="check_password">Revisa la contraseña, no son la misma</string>
     <string name="creating_user">Creando usuario, espere...</string>
     <string name="insert_url">Inserte la url</string>
+    <string name="different_account">Cancelar</string>
+    <string name="biometric_auth">Acceso biométrico</string>
+    <string name="change_img">Cambiar imagen</string>
 </resources>

@@ -73,4 +73,7 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
     implementation 'com.github.abdularis:CircularImageView:1.5'
 
+    //Biometric login
+    implementation 'androidx.biometric:biometric:1.1.0'
+
 }
