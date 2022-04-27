@@ -43,4 +43,9 @@
     <string name="biometric_auth">Acceso biométrico</string>
     <string name="change_img">Cambiar imagen</string>
     <string name="press_again">Presione atrás otra vez para salir</string>
+    <string name="forgot_password">Olvidaste tu contraseña?</string>
+    <string name="put_email">Introduzca su email aquí</string>
+    <string name="reset_password">Recuperar</string>
+    <string name="email_sent">Email enviado</string>
+    <string name="email_no_exists">Ese email no está registrado</string>
 </resources>

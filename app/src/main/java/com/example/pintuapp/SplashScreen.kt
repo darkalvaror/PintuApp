@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
@@ -28,7 +29,18 @@ class SplashScreen : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        session()
+        binding.imageView2.visibility = View.GONE
+        binding.imageView3.visibility = View.GONE
+
+        handler = Handler(Looper.myLooper()!!)
+        handler.postDelayed({
+            binding.imageView2.visibility = View.VISIBLE
+            binding.imageView3.visibility = View.VISIBLE
+        }, 3000)
+
+        handler.postDelayed({
+            session()
+        }, 3000)
 
         val analytics = FirebaseAnalytics.getInstance(this@SplashScreen)
         val bundle = Bundle()

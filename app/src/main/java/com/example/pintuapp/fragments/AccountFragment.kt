@@ -81,10 +81,10 @@ class AccountFragment : Fragment() {
 
         binding.saveButton.setOnClickListener {
             if ((binding.phoneText.text).isNullOrEmpty()) {
-                binding.phoneText.setText("000000000")
+                binding.phoneText.setText("")
             }
             if ((binding.creditCardNumber.text).isNullOrEmpty()) {
-                binding.creditCardNumber.setText("0000000000000000")
+                binding.creditCardNumber.setText("")
             }
 
             if (binding.nameText.text.toString().isEmpty()

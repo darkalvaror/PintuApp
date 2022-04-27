@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import com.example.pintuapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -33,6 +34,16 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.progressBar.visibility = View.GONE
+
+        binding.textView3.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java).apply {
+                if (!binding.textInputEdit.text.isNullOrEmpty()) {
+                    putExtra("forgotPassword", binding.textInputEdit.text.toString())
+                }
+            }
+            startActivity(intent)
+            finish()
+        }
 
         setup()
     }

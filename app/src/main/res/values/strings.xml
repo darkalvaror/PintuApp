@@ -29,7 +29,7 @@
     <string name="second_fragment_label" translatable="false">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="error" translatable="false">Error</string>
+    <string name="error" translatable="false">Error, try again</string>
     <string name="errorLogin">Error with your login</string>
     <string name="done">Done</string>
     <string name="prefs_file" translatable="false">com.example.pintuapp.PREFERENCE_FILE_KEY</string>
@@ -47,4 +47,9 @@
     <string name="insert_url">Insert url</string>
     <string name="change_img">Change image</string>
     <string name="press_again">Press again to exit</string>
+    <string name="forgot_password">Forgot you password?</string>
+    <string name="put_email">Put your email here</string>
+    <string name="reset_password">Reset</string>
+    <string name="email_sent">Email sent</string>
+    <string name="email_no_exists">This email doesn`t registered</string>
 </resources>
