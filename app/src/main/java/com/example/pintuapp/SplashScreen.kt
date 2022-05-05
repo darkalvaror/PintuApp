@@ -29,12 +29,10 @@ class SplashScreen : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.imageView2.visibility = View.GONE
         binding.imageView3.visibility = View.GONE
 
         handler = Handler(Looper.myLooper()!!)
         handler.postDelayed({
-            binding.imageView2.visibility = View.VISIBLE
             binding.imageView3.visibility = View.VISIBLE
         }, 3000)
 

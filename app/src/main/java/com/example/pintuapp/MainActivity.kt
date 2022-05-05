@@ -2,18 +2,12 @@ package com.example.pintuapp
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.database.sqlite.SQLiteDatabase
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.pintuapp.databinding.ActivityMainBinding
@@ -22,7 +16,6 @@ import com.example.pintuapp.fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.NonCancellable.cancel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -83,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 val inflater = layoutInflater
                 val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
                 val editText = dialogLayout.findViewById<EditText>(R.id.editText)
-                editText.setText(imgUrl)
+                editText.setText(imgUrl)    
 
                 with(builder) {
                     setTitle(getString(R.string.change_img))
@@ -100,7 +93,6 @@ class MainActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(context, getString(R.string.completeAllTheFields), Toast.LENGTH_SHORT).show()
                         }
-
                     }
                     setNegativeButton(getString(R.string.different_account)){ dialog, which ->
                         Log.d("Main", "Negative button clicked")
