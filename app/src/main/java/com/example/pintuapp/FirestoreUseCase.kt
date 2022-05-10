@@ -4,7 +4,11 @@ class FirestoreUseCase {
 
     private val repo = FirebaseRepo()
 
-    fun getAllCategories(): MutableList<CategoryDataClass> {
-        return repo.getCategoryData()
+    fun getAllCategories() {
+        /*return repo.getCategoryData()*/
+    }
+
+    fun getCategoryList() {
+        /*return repo.getCategoryList()*/
     }
 }

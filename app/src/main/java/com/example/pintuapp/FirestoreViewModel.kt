@@ -6,7 +6,11 @@ class FirestoreViewModel: ViewModel() {
 
     private val firestoreUseCase = FirestoreUseCase()
 
-    fun getAllCategories(): MutableList<CategoryDataClass>  {
-        return firestoreUseCase.getAllCategories()
+    fun getAllCategories() {
+        /*return firestoreUseCase.getAllCategories()*/
+    }
+
+    fun getCategoryList() {
+        /*return firestoreUseCase.getCategoryList()*/
     }
 }
