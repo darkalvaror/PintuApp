@@ -53,4 +53,6 @@
     <string name="email_sent">Email sent</string>
     <string name="email_no_exists">This email doesn`t registered</string>
     <string name="offers">Offers</string>
+    <string name="search">Search any product</string>
+    <string name="category">Category</string>
 </resources>

@@ -1,4 +1,6 @@
-package com.example.pintuapp
+package com.example.pintuapp.domain.useCase
+
+import com.example.pintuapp.domain.repository.FirebaseRepo
 
 class FirestoreUseCase {
 

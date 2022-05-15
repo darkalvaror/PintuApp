@@ -1,4 +1,4 @@
-package com.example.pintuapp
+package com.example.pintuapp.presentation.activities
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import com.example.pintuapp.R
 import com.example.pintuapp.databinding.ActivitySplashScreenBinding
 import com.google.firebase.analytics.FirebaseAnalytics
 import java.util.concurrent.Executor

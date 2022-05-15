@@ -13,25 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PintuApp">
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".presentation.activities.ForgotPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".AlreadyLogin"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".presentation.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".presentation.activities.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.PintuApp.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.activities.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".presentation.activities.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

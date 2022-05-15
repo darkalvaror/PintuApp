@@ -1,4 +1,4 @@
-package com.example.pintuapp.fragments
+package com.example.pintuapp.presentation.fragments
 
 import android.content.ContentValues.TAG
 import android.content.Context
@@ -6,14 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.pintuapp.MainActivity
+import com.example.pintuapp.presentation.activities.MainActivity
 import com.example.pintuapp.R
 import com.example.pintuapp.databinding.FragmentAccountBinding
 import com.google.firebase.auth.FirebaseAuth

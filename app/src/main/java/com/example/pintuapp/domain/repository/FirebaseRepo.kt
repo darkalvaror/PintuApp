@@ -1,11 +1,11 @@
-package com.example.pintuapp
+package com.example.pintuapp.domain.repository
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pintuapp.data.dataClass.OffersDataClass
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FirebaseRepo: AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
-    private val categoryList = mutableListOf<CategoryDataClass>()
+    private val categoryList = mutableListOf<OffersDataClass>()
 }

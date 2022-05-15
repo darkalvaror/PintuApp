@@ -49,4 +49,6 @@
     <string name="email_sent">Email enviado</string>
     <string name="email_no_exists">Ese email no está registrado</string>
     <string name="offers">Ofertas</string>
+    <string name="search">Buscar cualquier producto</string>
+    <string name="category">Categoría</string>
 </resources>

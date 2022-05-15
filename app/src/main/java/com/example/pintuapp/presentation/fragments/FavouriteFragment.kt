@@ -1,4 +1,4 @@
-package com.example.pintuapp.fragments
+package com.example.pintuapp.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,9 +1,10 @@
-package com.example.pintuapp
+package com.example.pintuapp.presentation.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.pintuapp.R
 import com.example.pintuapp.databinding.ActivityForgotPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
