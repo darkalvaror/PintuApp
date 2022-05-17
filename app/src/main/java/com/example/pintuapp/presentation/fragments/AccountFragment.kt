@@ -2,6 +2,7 @@ package com.example.pintuapp.presentation.fragments
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.pintuapp.presentation.activities.MainActivity
 import com.example.pintuapp.R
 import com.example.pintuapp.databinding.FragmentAccountBinding
@@ -47,22 +49,30 @@ class AccountFragment : Fragment() {
         email = prefs?.getString("email", null)
 
         binding.deleteButton.setOnClickListener {
-            db.collection("Usuario").document(email.toString()).delete()
 
-            handler = Handler(Looper.myLooper()!!)
-            handler.postDelayed({
-                val user = FirebaseAuth.getInstance().currentUser
-                user?.delete()?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "User account deleted.")
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(getString(R.string.are_you_sure))
+            builder.setMessage(getString(R.string.deleteAccount))
+            builder.setPositiveButton(getString(R.string.okay)) { dialogInterface: DialogInterface, i: Int ->
+                db.collection("Usuario").document(email.toString()).delete()
+
+                handler = Handler(Looper.myLooper()!!)
+                handler.postDelayed({
+                    val user = FirebaseAuth.getInstance().currentUser
+                    user?.delete()?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "User account deleted.")
+                        }
                     }
-                }
 
-                prefs!!.edit().clear().apply()
+                    prefs!!.edit().clear().apply()
 
-                FirebaseAuth.getInstance().signOut()
-                onBackPressed()
-            }, 1000)
+                    FirebaseAuth.getInstance().signOut()
+                    onBackPressed()
+                }, 1000)
+            }
+            builder.setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, i: Int -> }
+            builder.show()
         }
 
         db.collection("Usuario").document(email.toString()).get().addOnSuccessListener {
@@ -90,7 +100,7 @@ class AccountFragment : Fragment() {
                 || binding.surnameText.text.toString().isEmpty()
                 || binding.emailText.text.toString().isEmpty()
             ) {
-                Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.completeAllTheFields), Toast.LENGTH_SHORT).show()
             } else {
                 db.collection("Usuario").document(email.toString()).set(
                     hashMapOf(
@@ -102,6 +112,7 @@ class AccountFragment : Fragment() {
                         "Img_url" to photoUrl.toString()
                     )
                 )
+                Toast.makeText(context, getString(R.string.complete), Toast.LENGTH_SHORT).show()
             }
         }
     }

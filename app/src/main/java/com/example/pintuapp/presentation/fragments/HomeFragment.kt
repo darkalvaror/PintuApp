@@ -46,7 +46,6 @@ class HomeFragment : Fragment() {
         db.collection("Productos").get().addOnSuccessListener { documents ->
             val categoryList = mutableListOf<CategoryDataClass>()
             for (document in documents) {
-
                 categoryList.add(CategoryDataClass(document.data["Nombre"].toString(), document.data["Img"].toString(), document.data["Background"].toString(), document.data["Precio"].toString()))
                 binding.productRecyclerView.adapter = CategoryAdapter(categoryList)
                 binding.productRecyclerView.layoutManager = GridLayoutManager(context, 3)

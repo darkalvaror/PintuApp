@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.example.pintuapp.R
 import com.example.pintuapp.databinding.ActivityMainBinding
 import com.example.pintuapp.databinding.HeaderLayoutBinding
+import com.example.pintuapp.domain.viewModel.FirestoreViewModel
 import com.example.pintuapp.presentation.fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private var backPressedTime = 0L
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -44,6 +46,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         session()
+
+        db.collection("Notificacion").addSnapshotListener{ value, e ->
+            if (e != null) {
+                Log.w("TAG", "Listen failed.", e)
+                return@addSnapshotListener
+            }
+            binding.imageView7.visibility = View.VISIBLE
+        }
 
         val bundle = intent.extras
         if (bundle != null || loginSuccess) {
@@ -68,6 +78,7 @@ class MainActivity : AppCompatActivity() {
                     nameHeader.text = completeName
                 }
             }
+
             db.collection("Usuario").document(email!!).get().addOnSuccessListener {
                 Picasso.get().load(it.get("Img_url") as String?).into(photoHeader)
             }
@@ -77,8 +88,7 @@ class MainActivity : AppCompatActivity() {
                 val inflater = layoutInflater
                 val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
                 val editText = dialogLayout.findViewById<EditText>(R.id.editText)
-                editText.setText(imgUrl)    
-
+                editText.setText(imgUrl)
                 with(builder) {
                     setTitle(getString(R.string.change_img))
                     setPositiveButton(getString(R.string.okay)) { dialog, which ->
@@ -103,13 +113,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-
             // Guardado de datos
             val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
             prefs.putString("email", email)
             prefs.putBoolean("googleLogin", googleLogin)
             prefs.apply()
         }
+
         makeCurrentFragment(homeFragment)
 
         binding.animatedBottomBar.onTabSelected = {
@@ -130,11 +140,9 @@ class MainActivity : AppCompatActivity() {
             signOutButton.visibility = View.VISIBLE
         }
         signOutButton.setOnClickListener {
-            val prefs =
-                getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
             prefs.clear()
             prefs.apply()
-
             FirebaseAuth.getInstance().signOut()
             signOut = true
             onBackPressed()
@@ -156,6 +164,9 @@ class MainActivity : AppCompatActivity() {
             val bundle = intent.extras
             if (bundle != null) {
                 loginSuccess = bundle.getBoolean("loginSucces")
+            }
+            if (fragment == notificationFragment) {
+                binding.imageView7.visibility = View.GONE
             }
             if ((fragment == orderFragment || fragment == favouriteFragment || fragment == accountFragment) && !loginSuccess) {
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)

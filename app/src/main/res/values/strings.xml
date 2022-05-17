@@ -55,4 +55,10 @@
     <string name="offers">Offers</string>
     <string name="search">Search any product</string>
     <string name="category">Category</string>
+    <string name="productHighLights">Products highlight</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="complete">Changed saved</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="cancel">Cancel</string>
+    <string name="deleteAccount">Do you want to delete your account?</string>
 </resources>

@@ -51,4 +51,9 @@
     <string name="offers">Ofertas</string>
     <string name="search">Buscar cualquier producto</string>
     <string name="category">Categoría</string>
+    <string name="productHighLights">Productos destacados</string>
+    <string name="complete">Cambios guardados</string>
+    <string name="are_you_sure">¿Estas seguro?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="deleteAccount">¿Estas seguro de que quieres elimnar tu cuenta?</string>
 </resources>
