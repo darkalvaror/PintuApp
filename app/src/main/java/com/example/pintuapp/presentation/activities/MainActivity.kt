@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.pintuapp.R
+import com.example.pintuapp.data.listeners.ProductsListener
 import com.example.pintuapp.databinding.ActivityMainBinding
 import com.example.pintuapp.databinding.HeaderLayoutBinding
 import com.example.pintuapp.domain.viewModel.FirestoreViewModel
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bindingHeader: HeaderLayoutBinding
     private var homeFragment: Fragment = HomeFragment()
     private var notificationFragment: Fragment = NotificationFragment()
-    private var helpFragment: Fragment = HelpFragment()
+    private var helpFragment: Fragment = ProductsFragment()
     private var orderFragment: Fragment = OrdersFragment()
     private var favouriteFragment: Fragment = FavouriteFragment()
     private var accountFragment: Fragment = AccountFragment()

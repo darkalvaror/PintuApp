@@ -14,8 +14,6 @@ import com.squareup.picasso.Picasso
 
 class OffersAdapter(private val offerList: List<OffersDataClass>):RecyclerView.Adapter<OffersAdapter.CustomViewHolder>() {
 
-    private lateinit var binding: OffersItemLayoutBinding
-
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -36,7 +34,12 @@ class OffersAdapter(private val offerList: List<OffersDataClass>):RecyclerView.A
 
         text.text = offer.Nombre
         Picasso.get().load(offer.Img).into(image)
-        background.setBackgroundColor(Color.parseColor(offer.Background))
+        if (offer.Background.isEmpty()) {
+            background.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        } else {
+            background.setBackgroundColor(Color.parseColor(offer.Background))
+        }
+
     }
 
     override fun getItemCount(): Int {

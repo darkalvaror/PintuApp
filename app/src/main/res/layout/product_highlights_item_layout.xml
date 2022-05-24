@@ -20,20 +20,34 @@
 
     <TextView
         android:id="@+id/productName"
-        android:layout_width="144dp"
+        android:layout_width="0dp"
         android:layout_height="18dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:autoSizeTextType="uniform"
+        android:elegantTextHeight="false"
+        android:ellipsize="end"
+        android:freezesText="true"
         android:gravity="center"
+        android:maxLines="1"
         android:text="TextView"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productImg" />
 
     <TextView
         android:id="@+id/price"
-        android:layout_width="59dp"
+        android:layout_width="80dp"
         android:layout_height="20dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="TextView"
-        android:layout_marginStart="4dp"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productName" />

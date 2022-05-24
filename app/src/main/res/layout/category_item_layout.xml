@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <ImageView
+        android:id="@+id/categoryBackground"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/categorybackground"
+        android:backgroundTint="#1276F1"
+        android:backgroundTintMode="add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/categoryImg"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/categoryBackground"
+        app:layout_constraintEnd_toEndOf="@+id/categoryBackground"
+        app:layout_constraintStart_toStartOf="@+id/categoryBackground"
+        app:layout_constraintTop_toTopOf="@+id/categoryBackground"
+        tools:srcCompat="@drawable/ic_baseline_format_paint_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

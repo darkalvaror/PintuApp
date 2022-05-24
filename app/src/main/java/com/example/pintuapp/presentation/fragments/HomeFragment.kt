@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pintuapp.data.adapters.CategoryAdapter
+import com.example.pintuapp.R
+import com.example.pintuapp.data.adapters.ProductsAdapter
 import com.example.pintuapp.databinding.FragmentHomeBinding
 import com.example.pintuapp.data.adapters.OffersAdapter
-import com.example.pintuapp.data.dataClass.CategoryDataClass
+import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.data.dataClass.OffersDataClass
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -33,25 +35,28 @@ class HomeFragment : Fragment() {
         db.collection("Ofertas").get().addOnSuccessListener { documents ->
             val offerList = mutableListOf<OffersDataClass>()
             for (document in documents) {
-                val categoryObject = document.toObject(OffersDataClass::class.java)
-                offerList.add(categoryObject)
+                val offerObject = document.toObject(OffersDataClass::class.java)
+                offerList.add(offerObject)
                 binding.categoryReciclerView.adapter = OffersAdapter(offerList)
                 binding.categoryReciclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 binding.progressBar2.visibility = View.GONE
             }
         }.addOnFailureListener { exception ->
             Log.w("Error", "Error getting documents: ", exception)
+            Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
         }
 
-        db.collection("Productos").get().addOnSuccessListener { documents ->
-            val categoryList = mutableListOf<CategoryDataClass>()
+        db.collection("Productos").whereEqualTo("Promocion", true).get().addOnSuccessListener { documents ->
+            val categoryList = mutableListOf<ProductsDataClass>()
             for (document in documents) {
-                categoryList.add(CategoryDataClass(document.data["Nombre"].toString(), document.data["Img"].toString(), document.data["Background"].toString(), document.data["Precio"].toString()))
-                binding.productRecyclerView.adapter = CategoryAdapter(categoryList)
+                val products = document.toObject(ProductsDataClass::class.java)
+                categoryList.add(products)
+                binding.productRecyclerView.adapter = ProductsAdapter(categoryList)
                 binding.productRecyclerView.layoutManager = GridLayoutManager(context, 3)
             }
         }.addOnFailureListener { exception ->
             Log.w("Error", "Error getting documents: ", exception)
+            Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
         }
     }
 }

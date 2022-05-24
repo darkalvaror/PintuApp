@@ -1,20 +1,18 @@
 package com.example.pintuapp.data.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintuapp.R
 import com.example.pintuapp.data.dataClass.NotificationDataClass
-import com.example.pintuapp.data.dataClass.OffersDataClass
-import com.example.pintuapp.databinding.NotificationItemLayoutBinding
 import com.squareup.picasso.Picasso
 
 class NotificationAdapter(private val notificationList: List<NotificationDataClass>):RecyclerView.Adapter<NotificationAdapter.CustomViewHolder>() {
-
-    private lateinit var binding: NotificationItemLayoutBinding
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -30,14 +28,23 @@ class NotificationAdapter(private val notificationList: List<NotificationDataCla
         val view = holder.itemView
         holder.itemView.context
 
+
+
         val title = view.findViewById<TextView>(R.id.title)
         val body = view.findViewById<TextView>(R.id.body)
         val img = view.findViewById<ImageView>(R.id.imagen)
+        val background = view.findViewById<ConstraintLayout>(R.id.background)
 
         title.text = notification.Titulo
         body.text = notification.Mensaje
+
         if (!notification.Img.isNullOrEmpty()) {
             Picasso.get().load(notification.Img).into(img)
+        }
+        if (notification.Background.isNullOrEmpty()) {
+            background.setBackgroundColor(Color.parseColor("#978A2A2A"))
+        } else {
+            background.setBackgroundColor(Color.parseColor(notification.Background))
         }
     }
 
