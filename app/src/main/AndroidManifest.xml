@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PintuApp">
         <activity
+            android:name=".CategoryDetailBottomSheet"
+            android:exported="false" />
+        <activity
             android:name=".presentation.activities.ForgotPasswordActivity"
             android:exported="false" />
         <activity
@@ -46,6 +49,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+
         <service
             android:name=".presentation.activities.MyFirebaseMessagingService"
             android:exported="false">
@@ -54,4 +58,5 @@
             </intent-filter>
         </service>
     </application>
+
 </manifest>

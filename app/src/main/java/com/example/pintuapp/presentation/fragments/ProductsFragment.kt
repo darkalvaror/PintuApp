@@ -1,5 +1,6 @@
 package com.example.pintuapp.presentation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.example.pintuapp.data.dataClass.CategoryDataClass
 import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.data.listeners.ProductsListener
 import com.example.pintuapp.databinding.FragmentProductsBinding
+import com.example.pintuapp.presentation.activities.MainActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProductsFragment : Fragment(), ProductsListener {
@@ -37,13 +39,18 @@ class ProductsFragment : Fragment(), ProductsListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val prefs = requireActivity().getSharedPreferences(
+            requireActivity().getString(R.string.prefs_file),
+            Context.MODE_PRIVATE
+        )
+
         db.collection("Productos").get().addOnSuccessListener { documents ->
             val productList = mutableListOf<ProductsDataClass>()
             for (document in documents) {
                 val productObject = document.toObject(ProductsDataClass::class.java)
                 productList.add(productObject)
             }
-            binding.productsRecyclerView.adapter = ProductsAdapter(productList)
+            binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
             binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
         }.addOnFailureListener { exception ->
             Log.w("Error", "Error getting documents: ", exception)
@@ -56,25 +63,70 @@ class ProductsFragment : Fragment(), ProductsListener {
                 val categoryObject = document.toObject(CategoryDataClass::class.java)
                 categoryList.add(categoryObject)
             }
-            binding.categoryRecyclerView.adapter = CategoryAdapter(categoryList,this)
+            binding.categoryRecyclerView.adapter = CategoryAdapter(categoryList, this)
             binding.categoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }.addOnFailureListener { exception ->
             Log.w("Error", "Error getting documents: ", exception)
             Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                Log.d("Entrada", "Ha entrado en el metodo")
-                db.collection("Productos").whereEqualTo("Nombre", p0).get().addOnSuccessListener { documents ->
+        db.collection("Categoria").addSnapshotListener { value, error ->
+            db.collection("Categoria").get().addOnSuccessListener { documents ->
+                val categoryList = mutableListOf<CategoryDataClass>()
+                for (document in documents) {
+                    val categoryObject = document.toObject(CategoryDataClass::class.java)
+                    categoryList.add(categoryObject)
+                }
+                if (activity != null) {
+                    binding.categoryRecyclerView.adapter = CategoryAdapter(categoryList, this)
+                    binding.categoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                }
+            }
+        }
+
+        db.collection("Productos").addSnapshotListener { value, error ->
+            db.collection("Productos").get().addOnSuccessListener { documents ->
+                val productList = mutableListOf<ProductsDataClass>()
+                for (document in documents) {
+                    val productObject = document.toObject(ProductsDataClass::class.java)
+                    productList.add(productObject)
+                }
+                if (activity != null) {
+                    binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
+                    binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
+                }
+            }
+        }
+
+        if (prefs.getString("email", null) != null) {
+            db.collection("Usuario").document(prefs.getString("email", null)!!)
+                .collection("Favoritos").addSnapshotListener { value, error ->
+                db.collection("Productos").get().addOnSuccessListener { documents ->
                     val productList = mutableListOf<ProductsDataClass>()
                     for (document in documents) {
                         val productObject = document.toObject(ProductsDataClass::class.java)
                         productList.add(productObject)
                     }
-                    binding.productsRecyclerView.adapter = ProductsAdapter(productList)
-                    binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
+                    if (activity != null) {
+                        binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
+                        binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
+                    }
                 }
+            }
+        }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                db.collection("Productos").whereEqualTo("Nombre", p0).get()
+                    .addOnSuccessListener { documents ->
+                        val productList = mutableListOf<ProductsDataClass>()
+                        for (document in documents) {
+                            val productObject = document.toObject(ProductsDataClass::class.java)
+                            productList.add(productObject)
+                        }
+                        binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
+                        binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
+                    }
                 binding.searchView.clearFocus()
                 return true
             }
@@ -86,7 +138,7 @@ class ProductsFragment : Fragment(), ProductsListener {
     }
 
     override fun onClickCategory(products: MutableList<ProductsDataClass>) {
-       binding.productsRecyclerView.adapter = ProductsAdapter(products)
+        binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, products)
         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
     }
 }

@@ -20,7 +20,7 @@
     <string name="name">Nombre</string>
     <string name="surname">Apellidos</string>
     <string name="repeat_password">Repetir contraseña</string>
-    <string name="privacity_politics">He leido y acepto la <i><u>política de privacidad</u></i></string>
+    <string name="privacity_politics">He leído y acepto la <i><u>política de privacidad</u></i></string>
     <string name="okay">Aceptar</string>
     <string name="errorCreatingUser">Error al crear el nuevo usuario</string>
     <string name="accept_error">Marque la casilla de las políticas de privacidad</string>
@@ -57,4 +57,15 @@
     <string name="cancel">Cancelar</string>
     <string name="deleteAccount">¿Estas seguro de que quieres elimnar tu cuenta?</string>
     <string name="products">Productos</string>
+    <string name="add_to_cart">Añadir al carrito</string>
+    <string name="buy_now">Comprar ahora</string>
+    <string name="quantity">Cantidad:</string>
+    <string name="description">Descripcion:</string>
+    <string name="cart">Carrito</string>
+    <string name="order_summary">Resumen del pedido</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="shipping">Envío:</string>
+    <string name="total">Total:</string>
+    <string name="price">Precio:</string>
+    <string name="need_login">Necesitas loguearte para esto</string>
 </resources>

@@ -9,10 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintuapp.data.dataClass.OffersDataClass
 import com.example.pintuapp.R
+import com.example.pintuapp.databinding.CategoryDetailBottomSheetBinding
 import com.example.pintuapp.databinding.OffersItemLayoutBinding
+import com.example.pintuapp.presentation.activities.MainActivity
+import com.example.pintuapp.presentation.fragments.CategoryDetailBottomSheet
 import com.squareup.picasso.Picasso
 
-class OffersAdapter(private val offerList: List<OffersDataClass>):RecyclerView.Adapter<OffersAdapter.CustomViewHolder>() {
+class OffersAdapter(private val parentActivity: MainActivity, private val offerList: List<OffersDataClass>):RecyclerView.Adapter<OffersAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -38,6 +41,12 @@ class OffersAdapter(private val offerList: List<OffersDataClass>):RecyclerView.A
             background.setBackgroundColor(Color.parseColor("#FFFFFF"))
         } else {
             background.setBackgroundColor(Color.parseColor(offer.Background))
+        }
+
+        view.setOnClickListener {
+            CategoryDetailBottomSheet(offer).apply {
+                show(parentActivity.supportFragmentManager, "CategoryDetailBottomSheet")
+            }
         }
 
     }

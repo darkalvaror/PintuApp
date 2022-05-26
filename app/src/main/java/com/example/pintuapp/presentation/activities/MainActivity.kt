@@ -11,10 +11,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.pintuapp.R
-import com.example.pintuapp.data.listeners.ProductsListener
+import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.databinding.ActivityMainBinding
 import com.example.pintuapp.databinding.HeaderLayoutBinding
-import com.example.pintuapp.domain.viewModel.FirestoreViewModel
 import com.example.pintuapp.presentation.fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         bindingHeader = HeaderLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.floatingButton.visibility = View.INVISIBLE
         session()
 
         db.collection("Notificacion").addSnapshotListener{ value, e ->
@@ -82,6 +82,30 @@ class MainActivity : AppCompatActivity() {
 
             db.collection("Usuario").document(email!!).get().addOnSuccessListener {
                 Picasso.get().load(it.get("Img_url") as String?).into(photoHeader)
+            }
+
+            db.collection("Usuario").document(email!!).collection("Carrito").addSnapshotListener { value, e ->
+                if (e != null) {
+                    Log.w("TAG", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+                db.collection("Usuario").document(email!!).collection("Carrito").get().addOnSuccessListener { documents ->
+                    val list = mutableListOf<ProductsDataClass>()
+
+                    for (document in documents) {
+                        val productObject = document.toObject(ProductsDataClass::class.java)
+                        list.add(productObject)
+                    }
+                    if (list.isEmpty()) {
+                        binding.floatingButton.visibility = View.GONE
+                    } else {
+                        binding.floatingButton.visibility = View.VISIBLE
+                    }
+                }
+
+                binding.floatingButton.setOnClickListener {
+                    makeCurrentFragment(CartFragment(email!!))
+                }
             }
 
             photoHeader.setOnClickListener {
