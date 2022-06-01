@@ -45,10 +45,10 @@ class HomeFragment : Fragment() {
                 val offerObject = document.toObject(OffersDataClass::class.java)
                 offerList.add(offerObject)
             }
-            binding.categoryReciclerView.adapter =
-                OffersAdapter(activity as MainActivity, offerList)
-            binding.categoryReciclerView.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            if (activity != null) {
+                binding.categoryReciclerView.adapter = OffersAdapter(activity as MainActivity, offerList)
+                binding.categoryReciclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            }
             binding.progressBar2.visibility = View.GONE
         }.addOnFailureListener { exception ->
             Log.w("Error", "Error getting documents: ", exception)
@@ -80,10 +80,12 @@ class HomeFragment : Fragment() {
                     for (document in documents) {
                         val products = document.toObject(ProductsDataClass::class.java)
                         categoryList.add(products)
-                        binding.productRecyclerView.adapter =
-                            ProductsAdapter(activity as MainActivity, categoryList)
-                        binding.productRecyclerView.layoutManager =
-                            GridLayoutManager(context, 3)
+                        if (activity != null) {
+                            binding.productRecyclerView.adapter =
+                                ProductsAdapter(activity as MainActivity, categoryList)
+                            binding.productRecyclerView.layoutManager =
+                                GridLayoutManager(context, 3)
+                        }
                     }
                 }.addOnFailureListener { exception ->
                     Log.w("Error", "Error getting documents: ", exception)

@@ -68,4 +68,19 @@
     <string name="total">Total:</string>
     <string name="price">Precio:</string>
     <string name="need_login">Necesitas loguearte para esto</string>
+    <string name="order_successful">Pedido confirmado</string>
+    <string name="waiting">Esperando aprobación</string>
+    <string name="error">Error, inténtalo de nuevo</string>
+    <string name="problem">Has cancelado tu pago</string>
+    <string name="Account">Cuenta</string>
+    <string name="politics">Politicas y privacidad</string>
+    <string name="settings">Ajustes</string>
+    <string name="adaptability">Adaptabilidad</string>
+    <string name="who_Are_we">Sobre nosotros</string>
+    <string name="we_are_info">PintuApp se guía por cuatro principios: la obsesión por el cliente en lugar del enfoque de la competencia, la pasión por la invención, el compromiso con la excelencia operativa y el pensamiento a largo plazo. PintuApp se esfuerza por ser la empresa más centrada en el cliente de la Tierra, el mejor empleador de la Tierra y el lugar de trabajo más seguro de la Tierra. Reseñas de clientes, compras con 1 clic, recomendaciones personalizadas, Prime, Fulfillment by Pintuapp, Career Choice, tabletas Fire, Fire TV, Amazon Echo, Alexa, la tecnología Just Walk Out, PintuApp Studios y The Climate Pledge son algunas de las cosas iniciadas por PintuApp.</string>
+    <string name="shipping_info">Nuestro envío no es gratis, son solo 2€ el envío es algo que necesitamos, no es demasiado y en el futuro será gratis para todos los usuarios de nuestra plataforma</string>
+    <string name="our_products">Nuestros productos</string>
+    <string name="our_products_info">Nuestros productos son naturales, trabajamos con el medio ambiente y te brindamos nuestra mejor calidad.</string>
+    <string name="disable_notifications">Desactivar notifiaciones</string>
+    <string name="signin_login">Iniciar sesión o registrarte</string>
 </resources>

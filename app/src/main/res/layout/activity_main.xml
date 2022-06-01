@@ -43,6 +43,7 @@
 
         </FrameLayout>
 
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingButton"
             android:layout_width="wrap_content"
@@ -50,10 +51,11 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
+            android:contentDescription="floatingActionButton"
+            app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toTopOf="@+id/animatedBottomBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_baseline_shopping_cart_24"
-            android:contentDescription="floatingActionButton" />
+            app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
 
         <ImageView
             android:id="@+id/imageView7"

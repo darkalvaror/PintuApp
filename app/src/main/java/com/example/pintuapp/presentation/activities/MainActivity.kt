@@ -17,17 +17,22 @@ import com.example.pintuapp.databinding.HeaderLayoutBinding
 import com.example.pintuapp.presentation.fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.razorpay.PaymentResultListener
 import com.squareup.picasso.Picasso
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PaymentResultListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bindingHeader: HeaderLayoutBinding
     private var homeFragment: Fragment = HomeFragment()
     private var notificationFragment: Fragment = NotificationFragment()
-    private var helpFragment: Fragment = ProductsFragment()
+    private var productsFragment: Fragment = ProductsFragment()
+    private var helpFragment: Fragment = HelpFragment()
     private var orderFragment: Fragment = OrdersFragment()
     private var favouriteFragment: Fragment = FavouriteFragment()
     private var accountFragment: Fragment = AccountFragment()
+    private var cartFragment: Fragment = CartFragment()
+    private var politicsFragment: Fragment = PoliticsAndPrivacityFragment()
     private var loginSuccess: Boolean = false
     private var signOut: Boolean = false
     private var email: String? = null
@@ -37,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private var imgUrl: String? =""
     private val db = FirebaseFirestore.getInstance()
     private var backPressedTime = 0L
+    private var basketList = mutableListOf<ProductsDataClass>()
+    private var visibleFloatingButton: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,19 +63,25 @@ class MainActivity : AppCompatActivity() {
             binding.imageView7.visibility = View.VISIBLE
         }
 
+        val emailHeader = (binding.navigationView.getHeaderView(0).findViewById(R.id.emailTextView) as TextView)
+        val nameHeader = (binding.navigationView.getHeaderView(0).findViewById(R.id.user) as TextView)
+        nameHeader.text = getString(R.string.signin_login)
+
+        if (!loginSuccess || !googleLogin) {
+            nameHeader.setOnClickListener {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
         val bundle = intent.extras
         if (bundle != null || loginSuccess) {
             if (bundle != null) {
                 email = bundle.getString("email").toString()
                 googleLogin = bundle.getBoolean("googleLogin")
             }
-            val emailHeader = (binding.navigationView.getHeaderView(0)
-                .findViewById(R.id.emailTextView) as TextView)
             emailHeader.text = email
-            val nameHeader =
-                (binding.navigationView.getHeaderView(0).findViewById(R.id.user) as TextView)
-            val photoHeader =
-                (binding.navigationView.getHeaderView(0).findViewById(R.id.imageView) as ImageView)
+            val photoHeader = (binding.navigationView.getHeaderView(0).findViewById(R.id.imageView) as ImageView)
             val name = db.collection("Usuario").document(email.toString()).get()
             name.addOnSuccessListener {
                 if (it.exists()) {
@@ -92,19 +105,25 @@ class MainActivity : AppCompatActivity() {
                 db.collection("Usuario").document(email!!).collection("Carrito").get().addOnSuccessListener { documents ->
                     val list = mutableListOf<ProductsDataClass>()
 
+
                     for (document in documents) {
                         val productObject = document.toObject(ProductsDataClass::class.java)
                         list.add(productObject)
                     }
+
+                    setBasketObjects(list)
                     if (list.isEmpty()) {
                         binding.floatingButton.visibility = View.GONE
+                        visibleFloatingButton = false
                     } else {
                         binding.floatingButton.visibility = View.VISIBLE
+                        visibleFloatingButton = true
+
                     }
                 }
 
                 binding.floatingButton.setOnClickListener {
-                    makeCurrentFragment(CartFragment(email!!))
+                    makeCurrentFragment(cartFragment)
                 }
             }
 
@@ -193,13 +212,19 @@ class MainActivity : AppCompatActivity() {
             if (fragment == notificationFragment) {
                 binding.imageView7.visibility = View.GONE
             }
-            if ((fragment == orderFragment || fragment == favouriteFragment || fragment == accountFragment) && !loginSuccess) {
+            if ((fragment == orderFragment || fragment == favouriteFragment || fragment == accountFragment || fragment == cartFragment) && !loginSuccess) {
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
+                if (visibleFloatingButton) {
+                    binding.floatingButton.visibility = View.VISIBLE
+                }
                 replace(R.id.frame_container, fragment)
                 commit()
+            }
+            if(fragment == cartFragment) {
+                binding.floatingButton.visibility = View.GONE
             }
         }
 
@@ -216,11 +241,14 @@ class MainActivity : AppCompatActivity() {
         when (id) {
             R.id.home -> makeCurrentFragment(homeFragment)
             R.id.notification -> makeCurrentFragment(notificationFragment)
-            R.id.help -> makeCurrentFragment(helpFragment)
+            R.id.products -> makeCurrentFragment(productsFragment)
             R.id.menu -> openCloseNavigationDrawer()
             R.id.order -> makeCurrentFragment(orderFragment)
             R.id.favourites -> makeCurrentFragment(favouriteFragment)
             R.id.account -> makeCurrentFragment(accountFragment)
+            R.id.basket ->makeCurrentFragment(cartFragment)
+            R.id.politics ->makeCurrentFragment(politicsFragment)
+            R.id.help -> makeCurrentFragment(helpFragment)
         }
         return true
     }
@@ -236,5 +264,35 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.press_again), Toast.LENGTH_SHORT).show()
         }
         backPressedTime = System.currentTimeMillis()
+    }
+
+    override fun onPaymentSuccess(p0: String?) {
+        Log.d("TAGOK", "onPaymentSucces: " + p0)
+        Toast.makeText(applicationContext, getString(R.string.order_successful), Toast.LENGTH_SHORT).show()
+        db.collection("Usuario").document(email!!).collection("Pedidos").document(p0!!).set(
+            hashMapOf("id" to p0,
+            "products" to basketList,
+            "estado" to getString(R.string.waiting))
+        )
+        for (name in basketList) {
+            db.collection("Usuario").document(email!!).collection("Carrito").document(name.Nombre).delete()
+        }
+
+        db.collection("Pedidos").document(p0).set(
+            hashMapOf(
+                "id" to p0,
+                "email" to email,
+                "products" to basketList,
+                "estado" to getString(R.string.waiting)
+            )
+        )
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
+        Toast.makeText(applicationContext, getString(R.string.problem), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setBasketObjects(list: List<ProductsDataClass>) {
+        basketList = list as MutableList<ProductsDataClass>
     }
 }

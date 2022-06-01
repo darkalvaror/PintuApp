@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/order"
-        android:title="@string/order"
-        android:icon="@drawable/ic_baseline_attach_money_24" />
-    <item
-        android:id="@+id/favourites"
-        android:title="@string/favourites"
-        android:icon="@drawable/ic_baseline_favorite_24" />
-    <item
-        android:id="@+id/account"
-        android:title="@string/account"
-        android:icon="@drawable/ic_baseline_account_circle_24" />
-
+    <item android:title="@string/Account">
+        <menu>
+            <item
+                android:id="@+id/order"
+                android:title="@string/order"
+                android:icon="@drawable/ic_baseline_attach_money_24" />
+            <item
+                android:id="@+id/favourites"
+                android:title="@string/favourites"
+                android:icon="@drawable/ic_baseline_favorite_24" />
+            <item
+                android:id="@+id/account"
+                android:title="@string/account"
+                android:icon="@drawable/ic_baseline_account_circle_24" />
+            <item
+                android:id="@+id/basket"
+                android:title="@string/cart"
+                android:icon="@drawable/ic_baseline_shopping_cart_24" />
+        </menu>
+    </item>
+    <item android:title="@string/help">
+        <menu>
+            <item
+                android:id="@+id/politics"
+                android:title="@string/politics"
+                android:icon="@drawable/ic_baseline_menu_book_24" />
+            <item
+                android:id="@+id/help"
+                android:title="@string/help"
+                android:icon="@drawable/ic_baseline_help_24" />
+        </menu>
+    </item>
 </menu>
