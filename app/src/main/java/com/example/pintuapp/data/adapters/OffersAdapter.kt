@@ -12,6 +12,8 @@ import com.example.pintuapp.R
 import com.example.pintuapp.databinding.CategoryDetailBottomSheetBinding
 import com.example.pintuapp.databinding.OffersItemLayoutBinding
 import com.example.pintuapp.presentation.activities.MainActivity
+import com.example.pintuapp.presentation.fragments.AddOfferFragment
+import com.example.pintuapp.presentation.fragments.AddProductFragment
 import com.example.pintuapp.presentation.fragments.CategoryDetailBottomSheet
 import com.squareup.picasso.Picasso
 
@@ -44,8 +46,15 @@ class OffersAdapter(private val parentActivity: MainActivity, private val offerL
         }
 
         view.setOnClickListener {
-            CategoryDetailBottomSheet(offer).apply {
-                show(parentActivity.supportFragmentManager, "CategoryDetailBottomSheet")
+            if (offer.Nombre == parentActivity.getString(R.string.add)) {
+                parentActivity.supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frame_container, AddOfferFragment(parentActivity))
+                    commit()
+                }
+            } else {
+                CategoryDetailBottomSheet(offer).apply {
+                    show(parentActivity.supportFragmentManager, "CategoryDetailBottomSheet")
+                }
             }
         }
 

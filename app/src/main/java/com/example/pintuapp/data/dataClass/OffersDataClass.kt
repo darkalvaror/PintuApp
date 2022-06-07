@@ -1,7 +1,7 @@
 package com.example.pintuapp.data.dataClass
 
 data class OffersDataClass(
-    var Background: String = "#C32323",
+    var Background: String = "",
     var Img: String = "",
     var Nombre: String = "",
     val Descripcion: String = ""

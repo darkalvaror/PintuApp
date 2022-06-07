@@ -10,9 +10,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintuapp.R
 import com.example.pintuapp.data.dataClass.NotificationDataClass
+import com.example.pintuapp.presentation.activities.MainActivity
+import com.example.pintuapp.presentation.fragments.AddNotificationFragment
+import com.example.pintuapp.presentation.fragments.AddProductFragment
 import com.squareup.picasso.Picasso
 
-class NotificationAdapter(private val notificationList: List<NotificationDataClass>):RecyclerView.Adapter<NotificationAdapter.CustomViewHolder>() {
+class NotificationAdapter(private var parentActivity: MainActivity, private val notificationList: List<NotificationDataClass>):RecyclerView.Adapter<NotificationAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -45,6 +48,17 @@ class NotificationAdapter(private val notificationList: List<NotificationDataCla
             background.setBackgroundColor(Color.parseColor("#978A2A2A"))
         } else {
             background.setBackgroundColor(Color.parseColor(notification.Background))
+        }
+
+        view.setOnClickListener {
+            if (notification.Titulo == parentActivity.getString(R.string.add)) {
+                parentActivity.supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frame_container, AddNotificationFragment(parentActivity))
+                    commit()
+                }
+            } else {
+
+            }
         }
     }
 

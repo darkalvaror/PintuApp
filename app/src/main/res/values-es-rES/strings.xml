@@ -83,4 +83,18 @@
     <string name="our_products_info">Nuestros productos son naturales, trabajamos con el medio ambiente y te brindamos nuestra mejor calidad.</string>
     <string name="disable_notifications">Desactivar notifiaciones</string>
     <string name="signin_login">Iniciar sesión o registrarte</string>
+    <string name="add_product">Añadir producto</string>
+    <string name="add_product_to_db">Añadir producto a la BD</string>
+    <string name="background_color">Color de fondo</string>
+    <string name="image_url">URL de la imagen</string>
+    <string name="product_name">Nombre del producto</string>
+    <string name="promotion">Promoción</string>
+    <string name="add">Añadir</string>
+    <string name="offer_name">Nombre de la oferta</string>
+    <string name="category_name">Nombre de categoría</string>
+    <string name="hello_blank_fragment">Hola fragmento blanco</string>
+    <string name="notification_title">Titulo de la notificación</string>
+    <string name="add_offer">Añadir oferta</string>
+    <string name="add_notification">Añadir notificación</string>
+    <string name="add_category">Añadir categoría</string>
 </resources>

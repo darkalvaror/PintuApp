@@ -39,7 +39,7 @@ class OrderAdapter(private var parentActivity: MainActivity, private var product
         for (product in products.products) {
             list.add(product.Nombre)
             Picasso.get().load(product.Img).into(img)
-            totalPrice += product.Precio
+            totalPrice += product.Precio!!
         }
 
         description.text = list.toString()

@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.example.pintuapp.BuildConfig
 import com.example.pintuapp.R
 import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.databinding.ActivityMainBinding
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         bindingHeader = HeaderLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("Add", getString(R.string.add))
+        prefs.apply()
 
         binding.floatingButton.visibility = View.INVISIBLE
         session()

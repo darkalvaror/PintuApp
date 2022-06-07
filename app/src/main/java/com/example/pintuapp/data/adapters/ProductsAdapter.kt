@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pintuapp.R
 import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.presentation.activities.MainActivity
+import com.example.pintuapp.presentation.fragments.AddProductFragment
 import com.example.pintuapp.presentation.fragments.ProductsDetailBottomSheet
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
@@ -68,6 +69,12 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
             }
         }
 
+        if (products.Nombre == parentActivity.getString(R.string.add)) {
+            name.textSize = 16F
+            price.text = ""
+            favouriteButton.visibility = View.GONE
+        }
+
 
 
         favouriteButton.setOnClickListener {
@@ -92,8 +99,15 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
         }
 
         view.setOnClickListener {
-            ProductsDetailBottomSheet(products).apply {
-                show(parentActivity.supportFragmentManager, "ProductsDetailBottomSheet")
+            if (products.Nombre == parentActivity.getString(R.string.add)) {
+                parentActivity.supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frame_container, AddProductFragment(parentActivity))
+                    commit()
+                }
+            } else {
+                ProductsDetailBottomSheet(products).apply {
+                    show(parentActivity.supportFragmentManager, "ProductsDetailBottomSheet")
+                }
             }
         }
     }

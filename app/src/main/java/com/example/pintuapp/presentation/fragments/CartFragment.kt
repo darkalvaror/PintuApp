@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +26,7 @@ class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
     private val db = FirebaseFirestore.getInstance()
+    private var finalPrice = "0"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,11 +62,18 @@ class CartFragment : Fragment() {
                 }
 
                 binding.apply {
-                    recyclerView.adapter = CartAdapter(activity as MainActivity, productsList)
-                    recyclerView.layoutManager = GridLayoutManager(context, 1)
+                    if (activity != null) {
+                        recyclerView.adapter = CartAdapter(activity as MainActivity, productsList)
+                        recyclerView.layoutManager = GridLayoutManager(context, 1)
+                    }
 
-                    subtotalPrice.text = total.toString() + "€"
-                    totalPrice.text = (total + 2).toString() + "€"
+                    binding.subtotalPrice.text = total.toString() + "€"
+                    if (binding.subtotalPrice.text.toString() == "0€") {
+                        binding.totalPrice.text = (total).toString() + "€"
+                    } else {
+                        binding.totalPrice.text = (total + 2).toString() + "€"
+                    }
+                    finalPrice = (total + 2).toString()
                 }
             }
 
@@ -91,7 +100,12 @@ class CartFragment : Fragment() {
                         }
 
                         binding.subtotalPrice.text = total.toString() + "€"
-                        binding.totalPrice.text = (total + 2).toString() + "€"
+                        if (binding.subtotalPrice.text.toString() == "0€") {
+                            binding.totalPrice.text = (total).toString() + "€"
+                        } else {
+                            binding.totalPrice.text = (total + 2).toString() + "€"
+                        }
+                        finalPrice = (total + 2).toString()
 
                         if (activity != null) {
                             binding.recyclerView.adapter = CartAdapter(activity as MainActivity, newList)
@@ -104,22 +118,27 @@ class CartFragment : Fragment() {
     private fun startPayment() {
         val checkout = Checkout()
         checkout.setKeyID("rzp_test_uhp4xCx7F3e5ff")
-        try {
-            val options = JSONObject()
-            options.put("name", "PintuApp")
-            options.put("description", "Pedido de ejemplo")
-            options.put("image", "https://i.ibb.co/1mbfNwr/logo.png")
-            options.put("theme.color", "#3399cc")
-            options.put("currency", "EUR")
-            options.put("amount", "50000")
-            val retryObj = JSONObject()
-            retryObj.put("enabled", true)
-            retryObj.put("max_count", 4)
-            options.put("retry", retryObj)
+        val price = finalPrice + "00"
+        if (((finalPrice.toInt() - 2) == 0) || (finalPrice == "0") || (finalPrice.toInt() == 0)) {
+            Toast.makeText(context, "Add something to the basket", Toast.LENGTH_SHORT).show()
+        } else {
+            try {
+                val options = JSONObject()
+                options.put("name", "PintuApp")
+                options.put("description", "Pedido de ejemplo")
+                options.put("image", "https://i.ibb.co/1mbfNwr/logo.png")
+                options.put("theme.color", "#3399cc")
+                options.put("currency", "EUR")
+                options.put("amount", price)
+                val retryObj = JSONObject()
+                retryObj.put("enabled", true)
+                retryObj.put("max_count", 4)
+                options.put("retry", retryObj)
 
-            checkout.open(activity as MainActivity, options)
-        } catch (e: Exception) {
-            Log.e("TAG", "Error in starting Razorpay Checkout", e)
+                checkout.open(activity as MainActivity, options)
+            } catch (e: Exception) {
+                Log.e("TAG", "Error in starting Razorpay Checkout", e)
+            }
         }
     }
 }

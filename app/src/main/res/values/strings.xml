@@ -87,4 +87,18 @@
     <string name="our_products">Our products</string>
     <string name="our_products_info">Our products are natural, we are working with the environment and we provide you our best quality</string>
     <string name="disable_notifications">Disable notifications</string>
+    <string name="add_product">Add product</string>
+    <string name="add_product_to_db">Add product to DB</string>
+    <string name="background_color">Background color</string>
+    <string name="image_url">Image URL</string>
+    <string name="product_name">Product name</string>
+    <string name="promotion">Promotion</string>
+    <string name="add">Add</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="offer_name">Offer name</string>
+    <string name="category_name">Category name</string>
+    <string name="notification_title">Notification title</string>
+    <string name="add_offer">Add offer</string>
+    <string name="add_notification">Add notification</string>
+    <string name="add_category">Add category</string>
 </resources>

@@ -26,6 +26,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "version"
+    productFlavors{
+        AdministratorApp{
+            /*applicationIdSuffix ".admin"*/
+            versionNameSuffix "-adminApp"
+            buildConfigField 'boolean', 'adminMode', 'true'
+        }
+
+        ClientApp{
+            applicationIdSuffix ".client"
+            versionNameSuffix "-clientApp"
+            buildConfigField 'boolean', 'adminMode', 'false'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -84,4 +100,7 @@ dependencies {
 
     //Razorpay
     implementation 'com.razorpay:checkout:1.6.19'
+
+    //Colorpicker
+    implementation "com.github.skydoves:colorpickerview:2.2.4"
 }

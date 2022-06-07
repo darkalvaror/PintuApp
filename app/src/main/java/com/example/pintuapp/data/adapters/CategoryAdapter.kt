@@ -12,10 +12,13 @@ import com.example.pintuapp.R
 import com.example.pintuapp.data.dataClass.CategoryDataClass
 import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.data.listeners.ProductsListener
+import com.example.pintuapp.presentation.activities.MainActivity
+import com.example.pintuapp.presentation.fragments.AddCategoryFragment
+import com.example.pintuapp.presentation.fragments.AddProductFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
-class CategoryAdapter(private var categoryList: List<CategoryDataClass>, val callback: ProductsListener) : RecyclerView.Adapter<CategoryAdapter.CustomViewHolder>() {
+class CategoryAdapter(private var parentActivity: MainActivity, private var categoryList: List<CategoryDataClass>, val callback: ProductsListener) : RecyclerView.Adapter<CategoryAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view)
     private var db = FirebaseFirestore.getInstance()
@@ -52,17 +55,22 @@ class CategoryAdapter(private var categoryList: List<CategoryDataClass>, val cal
         }
 
         view.setOnClickListener {
-            db.collection("Productos").whereEqualTo("Categoria", category.Nombre).get().addOnSuccessListener { documents ->
-                val productList = mutableListOf<ProductsDataClass>()
 
-                /*documents?.forEach {document->
-                }*/
+            if (category.Nombre == "Add" || category.Nombre == "Añadir") {
+                parentActivity.supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frame_container, AddCategoryFragment(parentActivity))
+                    commit()
+                }
+            } else {
+                db.collection("Productos").whereEqualTo("Categoria", category.Nombre).get().addOnSuccessListener { documents ->
+                    val productList = mutableListOf<ProductsDataClass>()
 
-                for (document in documents) {
-                    val productObject = document.toObject(ProductsDataClass::class.java)
-                   productList.add(productObject)
-               }
-                callback.onClickCategory(productList)
+                    for (document in documents) {
+                        val productObject = document.toObject(ProductsDataClass::class.java)
+                        productList.add(productObject)
+                    }
+                    callback.onClickCategory(productList)
+                }
             }
         }
     }

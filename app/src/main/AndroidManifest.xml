@@ -26,9 +26,6 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.PintuApp">
             <activity
-                android:name=".CategoryDetailBottomSheet"
-                android:exported="false" />
-            <activity
                 android:name=".presentation.activities.ForgotPasswordActivity"
                 android:exported="false" />
             <activity
@@ -42,7 +39,8 @@
             <activity
                 android:name=".presentation.activities.MainActivity"
                 android:exported="false"
-                android:windowSoftInputMode="adjustPan" />
+                android:windowSoftInputMode="adjustPan"
+                android:configChanges="uiMode" />
             <activity
                 android:name=".presentation.activities.SplashScreen"
                 android:exported="true">

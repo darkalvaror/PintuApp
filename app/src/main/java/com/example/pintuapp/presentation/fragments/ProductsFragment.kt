@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pintuapp.BuildConfig
 import com.example.pintuapp.R
 import com.example.pintuapp.data.adapters.CategoryAdapter
 import com.example.pintuapp.data.adapters.ProductsAdapter
@@ -50,8 +51,14 @@ class ProductsFragment : Fragment(), ProductsListener {
                 val productObject = document.toObject(ProductsDataClass::class.java)
                 productList.add(productObject)
             }
-            binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
-            binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
+            if (BuildConfig.adminMode) {
+                val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
+                productList.add(addProduct)
+            }
+            if (activity != null) {
+                binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
+                binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
+            }
         }.addOnFailureListener { exception ->
             Log.w("Error", "Error getting documents: ", exception)
             Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
@@ -63,8 +70,15 @@ class ProductsFragment : Fragment(), ProductsListener {
                 val categoryObject = document.toObject(CategoryDataClass::class.java)
                 categoryList.add(categoryObject)
             }
-            binding.categoryRecyclerView.adapter = CategoryAdapter(categoryList, this)
-            binding.categoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            if (BuildConfig.adminMode) {
+                val addCategory = CategoryDataClass(prefs.getString("Add", "Add")!!, "https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1")
+                categoryList.add(addCategory)
+            }
+            if (activity != null) {
+                binding.categoryRecyclerView.adapter = CategoryAdapter(activity as MainActivity, categoryList, this)
+                binding.categoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            }
         }.addOnFailureListener { exception ->
             Log.w("Error", "Error getting documents: ", exception)
             Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
@@ -77,8 +91,12 @@ class ProductsFragment : Fragment(), ProductsListener {
                     val categoryObject = document.toObject(CategoryDataClass::class.java)
                     categoryList.add(categoryObject)
                 }
+                if (BuildConfig.adminMode) {
+                    val addCategory = CategoryDataClass(prefs.getString("Add", "Add")!!, "https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1")
+                    categoryList.add(addCategory)
+                }
                 if (activity != null) {
-                    binding.categoryRecyclerView.adapter = CategoryAdapter(categoryList, this)
+                    binding.categoryRecyclerView.adapter = CategoryAdapter(activity as MainActivity, categoryList, this)
                     binding.categoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 }
             }
@@ -90,6 +108,10 @@ class ProductsFragment : Fragment(), ProductsListener {
                 for (document in documents) {
                     val productObject = document.toObject(ProductsDataClass::class.java)
                     productList.add(productObject)
+                }
+                if (BuildConfig.adminMode) {
+                    val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
+                    productList.add(addProduct)
                 }
                 if (activity != null) {
                     binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
@@ -107,6 +129,12 @@ class ProductsFragment : Fragment(), ProductsListener {
                         val productObject = document.toObject(ProductsDataClass::class.java)
                         productList.add(productObject)
                     }
+
+                    if (BuildConfig.adminMode) {
+                        val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
+                        productList.add(addProduct)
+                    }
+
                     if (activity != null) {
                         binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
                         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)
