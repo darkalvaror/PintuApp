@@ -82,8 +82,8 @@ class AccountFragment : Fragment() {
             if (!(it.get("Telefono") as String?).isNullOrEmpty()) {
                 binding.phoneText.setText(it.get("Telefono") as String?)
             }
-            if (!(it.get("Tarjeta") as String?).isNullOrEmpty()) {
-                binding.creditCardNumber.setText(it.get("Tarjeta") as String)
+            if (!(it.get("Direccion") as String?).isNullOrEmpty()) {
+                binding.creditCardNumber.setText(it.get("Direccion") as String)
             }
             photoUrl = it.get("Img_url") as String?
         }
@@ -108,7 +108,7 @@ class AccountFragment : Fragment() {
                         "Apellidos" to binding.surnameText.text.toString(),
                         "Email" to binding.emailText.text.toString(),
                         "Telefono" to binding.phoneText.text.toString(),
-                        "Tarjeta" to binding.creditCardNumber.text.toString(),
+                        "Direccion" to binding.creditCardNumber.text.toString(),
                         "Img_url" to photoUrl.toString()
                     )
                 )

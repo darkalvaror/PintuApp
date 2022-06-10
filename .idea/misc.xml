@@ -22,6 +22,7 @@
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/drawable/register_button.xml" value="0.1755" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/drawable/searchview.xml" value="0.2025" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/drawable/spinner_background.xml" value="0.1765" />
+        <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/account_details_item_layout.xml" value="0.35733695652173914" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/activity_already_login.xml" value="0.3625" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/activity_category_detail_bottom_sheet.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/activity_forgot_password.xml" value="0.3625" />
@@ -32,6 +33,7 @@
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/cart_product_item_layout.xml" value="0.33" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/category_detail_bottom_sheet.xml" value="0.33" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/category_item_layout.xml" value="0.67" />
+        <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/check_orders_item_layout.xml" value="0.35733695652173914" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/edit_text_layout.xml" value="0.2726449275362319" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/favourite_item_layout.xml" value="0.33" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_account.xml" value="0.33" />
@@ -41,6 +43,8 @@
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_add_product.xml" value="0.33" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_blank.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
+        <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_check_orders.xml" value="0.3484375" />
+        <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_check_orders_detail.xml" value="0.3484375" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_favourite.xml" value="0.33" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_help.xml" value="0.33" />
         <entry key="..\:/Users/Alvaro/AndroidStudioProjects/PintuApp/app/src/main/res/layout/fragment_home.xml" value="0.33" />

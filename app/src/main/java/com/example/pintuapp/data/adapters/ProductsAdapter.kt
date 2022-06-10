@@ -105,8 +105,9 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
                     commit()
                 }
             } else {
-                ProductsDetailBottomSheet(products).apply {
-                    show(parentActivity.supportFragmentManager, "ProductsDetailBottomSheet")
+                parentActivity.supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frame_container, ProductsDetailBottomSheet(products))
+                    commit()
                 }
             }
         }

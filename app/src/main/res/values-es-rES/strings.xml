@@ -97,4 +97,11 @@
     <string name="add_offer">Añadir oferta</string>
     <string name="add_notification">Añadir notificación</string>
     <string name="add_category">Añadir categoría</string>
+    <string name="check_orders">Revisar pedidos</string>
+    <string name="street_direction">Dirección</string>
+    <string name="add_information">Por favor, añada una dirección y un teléfono</string>
+    <string name="state">Estado:</string>
+    <string name="accept">Aceptar</string>
+    <string name="decline">Denegar</string>
+    <string name="details">Detalles</string>
 </resources>

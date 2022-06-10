@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pintuapp.R
 import com.example.pintuapp.data.adapters.CartAdapter
 import com.example.pintuapp.data.dataClass.ProductsDataClass
+import com.example.pintuapp.data.dataClass.UserDataClass
 import com.example.pintuapp.databinding.FragmentCartBinding
 import com.example.pintuapp.presentation.activities.MainActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,7 +46,18 @@ class CartFragment : Fragment() {
         Checkout.preload(requireActivity().applicationContext)
 
         binding.googlePayButton.setOnClickListener {
-            startPayment()
+            db.collection("Usuario").document(prefs.getString("email", null)!!).get().addOnSuccessListener { document ->
+                val userObject = document.toObject(UserDataClass::class.java)
+                if (userObject?.Direccion.isNullOrEmpty() || userObject?.Telefono.isNullOrEmpty()) {
+                    Toast.makeText(context, getString(R.string.add_information), Toast.LENGTH_SHORT).show()
+                    activity?.supportFragmentManager?.beginTransaction()?.apply {
+                        replace(R.id.frame_container, AccountFragment())
+                        commit()
+                    }
+                } else {
+                    startPayment()
+                }
+            }
         }
 
         var quantity = 0L

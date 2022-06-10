@@ -36,13 +36,13 @@ class NotificationFragment : Fragment() {
 
         db.collection("Notificacion").get().addOnSuccessListener { documents ->
             val notificationList = mutableListOf<NotificationDataClass>()
-            for (document in documents) {
-                val notification = document.toObject(NotificationDataClass::class.java)
-                notificationList.add(notification)
-            }
             if (BuildConfig.adminMode) {
                 val addNotification = NotificationDataClass("https://cdn-icons-png.flaticon.com/512/189/189689.png", "", getString(R.string.add), "#FFB1B1B1")
                 notificationList.add(addNotification)
+            }
+            for (document in documents) {
+                val notification = document.toObject(NotificationDataClass::class.java)
+                notificationList.add(notification)
             }
             if (activity != null) {
                 binding.notificationRecyclerView.adapter = NotificationAdapter(activity as MainActivity, notificationList)

@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.example.pintuapp.BuildConfig
 import com.example.pintuapp.R
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
     private var accountFragment: Fragment = AccountFragment()
     private var cartFragment: Fragment = CartFragment()
     private var politicsFragment: Fragment = PoliticsAndPrivacityFragment()
+    private var checkOrders: Fragment = CheckOrdersFragment()
     private var loginSuccess: Boolean = false
     private var signOut: Boolean = false
     private var email: String? = null
@@ -57,6 +59,8 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
         prefs.putString("Add", getString(R.string.add))
         prefs.apply()
 
+        binding.navigationView.menu[2].isVisible = BuildConfig.adminMode
+
         binding.floatingButton.visibility = View.INVISIBLE
         session()
 
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
 
         val emailHeader = (binding.navigationView.getHeaderView(0).findViewById(R.id.emailTextView) as TextView)
         val nameHeader = (binding.navigationView.getHeaderView(0).findViewById(R.id.user) as TextView)
-        nameHeader.text = getString(R.string.signin_login)
+        emailHeader.text = getString(R.string.signin_login)
 
         if (!loginSuccess || !googleLogin) {
             nameHeader.setOnClickListener {
@@ -254,6 +258,7 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
             R.id.basket ->makeCurrentFragment(cartFragment)
             R.id.politics ->makeCurrentFragment(politicsFragment)
             R.id.help -> makeCurrentFragment(helpFragment)
+            R.id.seeOrders -> makeCurrentFragment(checkOrders)
         }
         return true
     }

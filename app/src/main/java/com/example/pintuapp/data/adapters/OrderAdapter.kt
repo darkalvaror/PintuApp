@@ -1,5 +1,6 @@
 package com.example.pintuapp.data.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,14 @@ class OrderAdapter(private var parentActivity: MainActivity, private var product
         title.text = "ID: " + products.id
         price.text = totalPrice.toString() + " €"
         state.text = products.estado
+
+        if (state.text == "Esperando aprobación") {
+            state.setTextColor(Color.YELLOW)
+        } else if(state.text == "Denegado") {
+            state.setTextColor(Color.RED)
+        } else {
+            state.setTextColor(Color.GREEN)
+        }
     }
 
     override fun getItemCount(): Int {

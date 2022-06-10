@@ -36,7 +36,7 @@ android {
         }
 
         ClientApp{
-            applicationIdSuffix ".client"
+            /*applicationIdSuffix ".client"*/
             versionNameSuffix "-clientApp"
             buildConfigField 'boolean', 'adminMode', 'false'
         }

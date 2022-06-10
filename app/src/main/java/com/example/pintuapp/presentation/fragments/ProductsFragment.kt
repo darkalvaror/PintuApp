@@ -47,13 +47,13 @@ class ProductsFragment : Fragment(), ProductsListener {
 
         db.collection("Productos").get().addOnSuccessListener { documents ->
             val productList = mutableListOf<ProductsDataClass>()
-            for (document in documents) {
-                val productObject = document.toObject(ProductsDataClass::class.java)
-                productList.add(productObject)
-            }
             if (BuildConfig.adminMode) {
                 val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
                 productList.add(addProduct)
+            }
+            for (document in documents) {
+                val productObject = document.toObject(ProductsDataClass::class.java)
+                productList.add(productObject)
             }
             if (activity != null) {
                 binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
@@ -66,14 +66,13 @@ class ProductsFragment : Fragment(), ProductsListener {
 
         db.collection("Categoria").get().addOnSuccessListener { documents ->
             val categoryList = mutableListOf<CategoryDataClass>()
-            for (document in documents) {
-                val categoryObject = document.toObject(CategoryDataClass::class.java)
-                categoryList.add(categoryObject)
-            }
-
             if (BuildConfig.adminMode) {
                 val addCategory = CategoryDataClass(prefs.getString("Add", "Add")!!, "https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1")
                 categoryList.add(addCategory)
+            }
+            for (document in documents) {
+                val categoryObject = document.toObject(CategoryDataClass::class.java)
+                categoryList.add(categoryObject)
             }
             if (activity != null) {
                 binding.categoryRecyclerView.adapter = CategoryAdapter(activity as MainActivity, categoryList, this)
@@ -87,13 +86,13 @@ class ProductsFragment : Fragment(), ProductsListener {
         db.collection("Categoria").addSnapshotListener { value, error ->
             db.collection("Categoria").get().addOnSuccessListener { documents ->
                 val categoryList = mutableListOf<CategoryDataClass>()
-                for (document in documents) {
-                    val categoryObject = document.toObject(CategoryDataClass::class.java)
-                    categoryList.add(categoryObject)
-                }
                 if (BuildConfig.adminMode) {
                     val addCategory = CategoryDataClass(prefs.getString("Add", "Add")!!, "https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1")
                     categoryList.add(addCategory)
+                }
+                for (document in documents) {
+                    val categoryObject = document.toObject(CategoryDataClass::class.java)
+                    categoryList.add(categoryObject)
                 }
                 if (activity != null) {
                     binding.categoryRecyclerView.adapter = CategoryAdapter(activity as MainActivity, categoryList, this)
@@ -105,13 +104,13 @@ class ProductsFragment : Fragment(), ProductsListener {
         db.collection("Productos").addSnapshotListener { value, error ->
             db.collection("Productos").get().addOnSuccessListener { documents ->
                 val productList = mutableListOf<ProductsDataClass>()
-                for (document in documents) {
-                    val productObject = document.toObject(ProductsDataClass::class.java)
-                    productList.add(productObject)
-                }
                 if (BuildConfig.adminMode) {
                     val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
                     productList.add(addProduct)
+                }
+                for (document in documents) {
+                    val productObject = document.toObject(ProductsDataClass::class.java)
+                    productList.add(productObject)
                 }
                 if (activity != null) {
                     binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
@@ -125,16 +124,14 @@ class ProductsFragment : Fragment(), ProductsListener {
                 .collection("Favoritos").addSnapshotListener { value, error ->
                 db.collection("Productos").get().addOnSuccessListener { documents ->
                     val productList = mutableListOf<ProductsDataClass>()
-                    for (document in documents) {
-                        val productObject = document.toObject(ProductsDataClass::class.java)
-                        productList.add(productObject)
-                    }
-
                     if (BuildConfig.adminMode) {
                         val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
                         productList.add(addProduct)
                     }
-
+                    for (document in documents) {
+                        val productObject = document.toObject(ProductsDataClass::class.java)
+                        productList.add(productObject)
+                    }
                     if (activity != null) {
                         binding.productsRecyclerView.adapter = ProductsAdapter(activity as MainActivity, productList)
                         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 3)

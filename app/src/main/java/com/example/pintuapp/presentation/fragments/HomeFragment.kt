@@ -46,13 +46,13 @@ class HomeFragment : Fragment() {
 
         db.collection("Ofertas").get().addOnSuccessListener { documents ->
             val offerList = mutableListOf<OffersDataClass>()
-            for (document in documents) {
-                val offerObject = document.toObject(OffersDataClass::class.java)
-                offerList.add(offerObject)
-            }
             if (BuildConfig.adminMode) {
                 val addProduct = OffersDataClass("#FFB1B1B1", "https://cdn-icons-png.flaticon.com/512/189/189689.png", prefs.getString("Add" , "Add")!!, "")
                 offerList.add(addProduct)
+            }
+            for (document in documents) {
+                val offerObject = document.toObject(OffersDataClass::class.java)
+                offerList.add(offerObject)
             }
             if (activity != null) {
                 binding.categoryReciclerView.adapter = OffersAdapter(activity as MainActivity, offerList)
@@ -71,13 +71,13 @@ class HomeFragment : Fragment() {
             }
             db.collection("Ofertas").get().addOnSuccessListener { documents ->
                 val offerList = mutableListOf<OffersDataClass>()
-                for (document in documents) {
-                    val offerObject = document.toObject(OffersDataClass::class.java)
-                    offerList.add(offerObject)
-                }
                 if (BuildConfig.adminMode) {
                     val addProduct = OffersDataClass("#FFB1B1B1", "https://cdn-icons-png.flaticon.com/512/189/189689.png", prefs.getString("Add" , "Add")!!, "")
                     offerList.add(addProduct)
+                }
+                for (document in documents) {
+                    val offerObject = document.toObject(OffersDataClass::class.java)
+                    offerList.add(offerObject)
                 }
                 if (activity != null) {
                     binding.categoryReciclerView.adapter = OffersAdapter(activity as MainActivity, offerList)
@@ -88,13 +88,13 @@ class HomeFragment : Fragment() {
             db.collection("Productos").whereEqualTo("Promocion", true).get()
                 .addOnSuccessListener { documents ->
                     val categoryList = mutableListOf<ProductsDataClass>()
-                    for (document in documents) {
-                        val products = document.toObject(ProductsDataClass::class.java)
-                        categoryList.add(products)
-                    }
                     if (BuildConfig.adminMode) {
                         val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, "https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
                         categoryList.add(addProduct)
+                    }
+                    for (document in documents) {
+                        val products = document.toObject(ProductsDataClass::class.java)
+                        categoryList.add(products)
                     }
                     if (activity != null) {
                         binding.productRecyclerView.adapter = ProductsAdapter(activity as MainActivity, categoryList)
@@ -114,13 +114,13 @@ class HomeFragment : Fragment() {
                     db.collection("Productos").whereEqualTo("Promocion", true).get()
                         .addOnSuccessListener { documents ->
                             val categoryList = mutableListOf<ProductsDataClass>()
-                            for (document in documents) {
-                                val products = document.toObject(ProductsDataClass::class.java)
-                                categoryList.add(products)
-                            }
                             if (BuildConfig.adminMode) {
                                 val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://cdn-icons-png.flaticon.com/512/189/189689.png", "#FFB1B1B1", null,  "", false, "", null)
                                 categoryList.add(addProduct)
+                            }
+                            for (document in documents) {
+                                val products = document.toObject(ProductsDataClass::class.java)
+                                categoryList.add(products)
                             }
                             if (activity != null) {
                                 binding.productRecyclerView.adapter = ProductsAdapter(activity as MainActivity, categoryList)
@@ -134,13 +134,13 @@ class HomeFragment : Fragment() {
             db.collection("Productos").whereEqualTo("Promocion", true).get()
                 .addOnSuccessListener { documents ->
                     val categoryList = mutableListOf<ProductsDataClass>()
-                    for (document in documents) {
-                        val products = document.toObject(ProductsDataClass::class.java)
-                        categoryList.add(products)
-                    }
                     if (BuildConfig.adminMode) {
                         val addProduct = ProductsDataClass(prefs.getString("Add" , "Add")!!, Img ="https://png.pngtree.com/png-vector/20190217/ourlarge/pngtree-vector-add-icon-png-image_555576.jpg", "#FFB1B1B1", null,  "", false, "", null)
                         categoryList.add(addProduct)
+                    }
+                    for (document in documents) {
+                        val products = document.toObject(ProductsDataClass::class.java)
+                        categoryList.add(products)
                     }
                     if (activity != null) {
                         binding.productRecyclerView.adapter = ProductsAdapter(activity as MainActivity, categoryList)

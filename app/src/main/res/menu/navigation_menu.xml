@@ -32,4 +32,12 @@
                 android:icon="@drawable/ic_baseline_help_24" />
         </menu>
     </item>
+    <item android:title="@string/check_orders">
+        <menu>
+            <item
+                android:id="@+id/seeOrders"
+                android:title="@string/check_orders"
+                android:icon="@drawable/ic_baseline_shopping_basket_24" />
+        </menu>
+    </item>
 </menu>
