@@ -3,6 +3,7 @@ package com.example.pintuapp.data.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pintuapp.BuildConfig
 import com.example.pintuapp.R
 import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.presentation.activities.MainActivity
@@ -21,7 +23,7 @@ import com.example.pintuapp.presentation.fragments.ProductsDetailBottomSheet
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
-class ProductsAdapter(private val parentActivity: MainActivity, private var productList: MutableList<ProductsDataClass>): RecyclerView.Adapter<ProductsAdapter.CustomViewHolder>() {
+class ProductsAdapter(private val parentActivity: MainActivity, private var productList: MutableList<ProductsDataClass>): RecyclerView.Adapter<ProductsAdapter.CustomViewHolder>(), View.OnCreateContextMenuListener {
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view)
     private val db = FirebaseFirestore.getInstance()
@@ -41,12 +43,25 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
         val view = holder.itemView
         holder.itemView.context
 
+        if (BuildConfig.adminMode) {
+            parentActivity.registerForContextMenu(view)
+            parentActivity.setCollectionName("Productos")
+        }
+
         val name = view.findViewById<TextView>(R.id.productName)
         val price = view.findViewById<TextView>(R.id.price)
         val img = view.findViewById<ImageView>(R.id.productImg)
-        val background = view.findViewById<ConstraintLayout>(R.id.background)
+        val background = view.findViewById<ConstraintLayout>(R.id.itemBackground)
         val favouriteButton = view.findViewById<ImageButton>(R.id.imageButton2)
 
+        background.setOnLongClickListener {
+            if (BuildConfig.adminMode) {
+                parentActivity.setProduct(products)
+            }
+            return@setOnLongClickListener false
+        }
+
+        background.setOnCreateContextMenuListener(this)
         name.text = products.Nombre
         price.text = products.Precio.toString() + "€"
         if (products.Img.isNotBlank()) {
@@ -75,8 +90,6 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
             favouriteButton.visibility = View.GONE
         }
 
-
-
         favouriteButton.setOnClickListener {
             if (activatedFavourite) {
                 activatedFavourite = false
@@ -98,6 +111,8 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
             }
         }
 
+
+
         view.setOnClickListener {
             if (products.Nombre == parentActivity.getString(R.string.add)) {
                 parentActivity.supportFragmentManager.beginTransaction().apply {
@@ -115,5 +130,14 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
 
     override fun getItemCount(): Int {
         return productList.size
+    }
+
+    override fun onCreateContextMenu(
+        p0: ContextMenu?,
+        p1: View?,
+        p2: ContextMenu.ContextMenuInfo?
+    ) {
+        p0?.add(0, 120, 0, parentActivity.getString(R.string.edit))
+        p0?.add(0, 121, 1, parentActivity.getString(R.string.delete))
     }
 }

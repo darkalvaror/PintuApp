@@ -1,13 +1,16 @@
 package com.example.pintuapp.data.adapters
 
 import android.graphics.Color
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pintuapp.BuildConfig
 import com.example.pintuapp.R
 import com.example.pintuapp.data.dataClass.CategoryDataClass
 import com.example.pintuapp.data.dataClass.ProductsDataClass
@@ -18,7 +21,7 @@ import com.example.pintuapp.presentation.fragments.AddProductFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
-class CategoryAdapter(private var parentActivity: MainActivity, private var categoryList: List<CategoryDataClass>, val callback: ProductsListener) : RecyclerView.Adapter<CategoryAdapter.CustomViewHolder>() {
+class CategoryAdapter(private var parentActivity: MainActivity, private var categoryList: List<CategoryDataClass>, val callback: ProductsListener) : RecyclerView.Adapter<CategoryAdapter.CustomViewHolder>(), View.OnCreateContextMenuListener {
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view)
     private var db = FirebaseFirestore.getInstance()
@@ -38,9 +41,23 @@ class CategoryAdapter(private var parentActivity: MainActivity, private var cate
         val view = holder.itemView
         holder.itemView.context
 
+        if (BuildConfig.adminMode) {
+            parentActivity.registerForContextMenu(view)
+            parentActivity.setCollectionName("Categoria")
+        }
+
         val background = view.findViewById<ImageView>(R.id.categoryBackground)
         val img = view.findViewById<ImageView>(R.id.categoryImg)
+        val item = view.findViewById<ConstraintLayout>(R.id.constraint)
 
+        item.setOnLongClickListener {
+            if (BuildConfig.adminMode) {
+                parentActivity.setCategory(category)
+            }
+            return@setOnLongClickListener false
+        }
+
+        item.setOnCreateContextMenuListener(this)
         if (category.Background.isNotEmpty()) {
             var buttonDrawable = background.background
             buttonDrawable = DrawableCompat.wrap(buttonDrawable)
@@ -55,7 +72,6 @@ class CategoryAdapter(private var parentActivity: MainActivity, private var cate
         }
 
         view.setOnClickListener {
-
             if (category.Nombre == "Add" || category.Nombre == "Añadir") {
                 parentActivity.supportFragmentManager.beginTransaction().apply {
                     replace(R.id.frame_container, AddCategoryFragment(parentActivity))
@@ -77,5 +93,14 @@ class CategoryAdapter(private var parentActivity: MainActivity, private var cate
 
     override fun getItemCount(): Int {
         return categoryList.size
+    }
+
+    override fun onCreateContextMenu(
+        p0: ContextMenu?,
+        p1: View?,
+        p2: ContextMenu.ContextMenuInfo?
+    ) {
+        p0?.add(0, 124, 0, parentActivity.getString(R.string.edit))
+        p0?.add(0, 125, 1, parentActivity.getString(R.string.delete))
     }
 }

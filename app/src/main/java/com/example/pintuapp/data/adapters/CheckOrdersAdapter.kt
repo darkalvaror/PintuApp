@@ -43,7 +43,9 @@ class CheckOrdersAdapter(private var parentActivity: MainActivity, private var o
         productList.text = products.toString()
         email.text = products.email
         state.text = products.estado
-        Picasso.get().load(products.img).into(userImg)
+        if (!products.img.isNullOrEmpty()) {
+            Picasso.get().load(products.img).into(userImg)
+        }
         Picasso.get().load(products.products[0].Img).into(productImg)
 
         for (product in products.products) {

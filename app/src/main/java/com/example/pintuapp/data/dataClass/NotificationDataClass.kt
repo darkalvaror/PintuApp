@@ -4,5 +4,6 @@ data class NotificationDataClass(
     var Img: String = "",
     var Mensaje: String = "",
     var Titulo: String = "",
-    var Background: String = ""
+    var Background: String = "",
+    var ID: String = ""
 )

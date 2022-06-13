@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.pintuapp.R
+import com.example.pintuapp.data.dataClass.OffersDataClass
 import com.example.pintuapp.databinding.FragmentAddOfferBinding
 import com.example.pintuapp.presentation.activities.MainActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import kotlinx.android.synthetic.main.fragment_add_product.*
 
-class AddOfferFragment(private val parentActivity: MainActivity) : Fragment() {
+class AddOfferFragment(private val parentActivity: MainActivity, private val offer: OffersDataClass? = null) : Fragment() {
 
     private lateinit var binding : FragmentAddOfferBinding
     private val db = FirebaseFirestore.getInstance()
@@ -35,6 +36,8 @@ class AddOfferFragment(private val parentActivity: MainActivity) : Fragment() {
         setOfferOnDB()
 
         setBackgroundColor()
+
+        setText()
 
         binding.backButton5.setOnClickListener {
             parentActivity.supportFragmentManager.beginTransaction().apply {
@@ -66,6 +69,7 @@ class AddOfferFragment(private val parentActivity: MainActivity) : Fragment() {
     }
 
     private fun setBackgroundColor() {
+        var num = 1
         colorPickerView.setColorListener(ColorEnvelopeListener { envelope, fromUser ->
 
             binding.colorState.setOnClickListener {
@@ -81,6 +85,14 @@ class AddOfferFragment(private val parentActivity: MainActivity) : Fragment() {
             binding.textBackground.setText("#" + envelope.hexCode)
             binding.colorState.setBackgroundColor(envelope.color)
 
+            if (offer != null) {
+                if (num == 1) {
+                    binding.textBackground.setText(offer.Background)
+                    binding.colorState.setBackgroundColor(envelope.color)
+                    num = 0
+                }
+            }
+
             binding.okayText.setOnClickListener {
                 binding.colorPickerView.visibility = View.GONE
             }
@@ -90,5 +102,18 @@ class AddOfferFragment(private val parentActivity: MainActivity) : Fragment() {
     private fun isDarkModeOn(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    private fun setText() {
+        if (offer != null) {
+            binding.apply {
+                textOfferName.setText(offer.Nombre)
+                textOfferName.isEnabled = false
+                textImgUrl.setText(offer.Img)
+                textBackground.setText(offer.Background)
+                textDescription.setText(offer.Descripcion)
+                button3.text = parentActivity.getString(R.string.edit)
+            }
+        }
     }
 }

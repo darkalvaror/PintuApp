@@ -2,6 +2,7 @@ package com.example.pintuapp.presentation.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +59,11 @@ class ProductsDetailBottomSheet(private val productList: ProductsDataClass) :
                 numProducts.text = number.toString()
             }
 
+            if (!productList.Stock) {
+                stockText.text = getString(R.string.out_stock)
+                stockText.setTextColor(Color.RED)
+            }
+
             if (prefs?.getString("email", null) != null) {
                 db.collection("Usuario").document(prefs.getString("email", null)!!).collection("Favoritos").get().addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -92,36 +98,54 @@ class ProductsDetailBottomSheet(private val productList: ProductsDataClass) :
             }
 
             button.setOnClickListener {
-                if (prefs != null) {
-                    if (prefs.getString("email", null) != null) {
-                        db.collection("Usuario").document(prefs.getString("email", null)!!).collection("Carrito").document(productList.Nombre).set(
-                            hashMapOf("Nombre" to productList.Nombre,
-                            "Precio" to productList.Precio,
-                            "Img" to productList.Img,
-                            "Cantidad" to number,
-                            "Descripcion" to productList.Descripcion)
-                        )
+                if (productList.Stock) {
+                    if (prefs != null) {
+                        if (prefs.getString("email", null) != null) {
+                            db.collection("Usuario").document(prefs.getString("email", null)!!).collection("Carrito").document(productList.Nombre).set(
+                                hashMapOf("Nombre" to productList.Nombre,
+                                    "Precio" to productList.Precio,
+                                    "Img" to productList.Img,
+                                    "Cantidad" to number,
+                                    "Descripcion" to productList.Descripcion)
+                            )
+                        } else {
+                            val intent = Intent(context, LoginActivity::class.java)
+                            requireActivity().startActivity(intent)
+                        }
                     } else {
                         val intent = Intent(context, LoginActivity::class.java)
                         requireActivity().startActivity(intent)
                     }
                 } else {
-                    val intent = Intent(context, LoginActivity::class.java)
-                    requireActivity().startActivity(intent)
+                    Toast.makeText(context, getString(R.string.text_out_stock), Toast.LENGTH_SHORT).show()
                 }
             }
 
             button2.setOnClickListener {
-                if (prefs != null) {
-                    if (prefs.getString("email", null) != null) {
-                        // Completar código
+                if (productList.Stock) {
+                    if (prefs != null) {
+                        if (prefs.getString("email", null) != null) {
+                            db.collection("Usuario").document(prefs.getString("email", null)!!).collection("Carrito").document(productList.Nombre).set(
+                                hashMapOf("Nombre" to productList.Nombre,
+                                    "Precio" to productList.Precio,
+                                    "Img" to productList.Img,
+                                    "Cantidad" to number,
+                                    "Descripcion" to productList.Descripcion)
+                            )
+                            requireActivity().supportFragmentManager.beginTransaction().apply {
+                                replace(R.id.frame_container, CartFragment())
+                                commit()
+                            }
+                        } else {
+                            val intent = Intent(context, LoginActivity::class.java)
+                            requireActivity().startActivity(intent)
+                        }
                     } else {
                         val intent = Intent(context, LoginActivity::class.java)
                         requireActivity().startActivity(intent)
                     }
                 } else {
-                    val intent = Intent(context, LoginActivity::class.java)
-                    requireActivity().startActivity(intent)
+                    Toast.makeText(context, getString(R.string.text_out_stock), Toast.LENGTH_SHORT).show()
                 }
             }
         }

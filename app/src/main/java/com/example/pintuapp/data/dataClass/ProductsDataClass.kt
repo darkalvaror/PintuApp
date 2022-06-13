@@ -8,5 +8,6 @@ data class ProductsDataClass(
     var Categoria: String = "",
     var Promocion: Boolean = false,
     var Descripcion: String = "No info",
-    var Cantidad: Long? = 1L
+    var Cantidad: Long? = 1L,
+    var Stock: Boolean = true
 )

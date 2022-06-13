@@ -16,7 +16,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 hashMapOf("Mensaje" to it.body,
                 "Titulo" to it.title,
                 "Img" to it.imageUrl,
-                    "Background" to it.color
+                    "Background" to it.color,
+                    "ID" to remoteMessage.messageId
                 )
             )
         }

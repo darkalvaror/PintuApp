@@ -104,4 +104,9 @@
     <string name="accept">Aceptar</string>
     <string name="decline">Denegar</string>
     <string name="details">Detalles</string>
+    <string name="out_stock">Fuera de stock</string>
+    <string name="text_out_stock">Este producto está fuera de stock</string>
+    <string name="modify">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
 </resources>

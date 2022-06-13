@@ -1,5 +1,6 @@
 package com.example.pintuapp.presentation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -33,6 +34,33 @@ class NotificationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val prefs = requireActivity().getSharedPreferences(
+            requireActivity().getString(R.string.prefs_file),
+            Context.MODE_PRIVATE
+        )
+
+        db.collection("Notificacion").addSnapshotListener { value, error ->
+            db.collection("Notificacion").get().addOnSuccessListener { documents ->
+                val notificationList = mutableListOf<NotificationDataClass>()
+                if (BuildConfig.adminMode) {
+                    val addNotification = NotificationDataClass("https://cdn-icons-png.flaticon.com/512/189/189689.png", "", prefs.getString("Add" , "Add")!!, "#FFB1B1B1")
+                    notificationList.add(addNotification)
+                }
+                for (document in documents) {
+                    val notification = document.toObject(NotificationDataClass::class.java)
+                    notificationList.add(notification)
+                }
+                if (activity != null) {
+                    binding.notificationRecyclerView.adapter = NotificationAdapter(activity as MainActivity, notificationList)
+                    binding.notificationRecyclerView.layoutManager = GridLayoutManager(context, 1)
+                }
+
+            }.addOnFailureListener { exception ->
+                Log.w("Error", "Error getting documents: ", exception)
+                Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
+            }
+        }
 
         db.collection("Notificacion").get().addOnSuccessListener { documents ->
             val notificationList = mutableListOf<NotificationDataClass>()

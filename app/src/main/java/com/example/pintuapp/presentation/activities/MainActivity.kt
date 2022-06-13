@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +15,9 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.example.pintuapp.BuildConfig
 import com.example.pintuapp.R
+import com.example.pintuapp.data.dataClass.CategoryDataClass
+import com.example.pintuapp.data.dataClass.NotificationDataClass
+import com.example.pintuapp.data.dataClass.OffersDataClass
 import com.example.pintuapp.data.dataClass.ProductsDataClass
 import com.example.pintuapp.databinding.ActivityMainBinding
 import com.example.pintuapp.databinding.HeaderLayoutBinding
@@ -47,6 +52,11 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
     private var backPressedTime = 0L
     private var basketList = mutableListOf<ProductsDataClass>()
     private var visibleFloatingButton: Boolean = false
+    private var collectionName: String = ""
+    private lateinit var product: ProductsDataClass
+    private lateinit var offer: OffersDataClass
+    private lateinit var category: CategoryDataClass
+    private lateinit var notification: NotificationDataClass
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +87,7 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
         emailHeader.text = getString(R.string.signin_login)
 
         if (!loginSuccess || !googleLogin) {
-            nameHeader.setOnClickListener {
+            emailHeader.setOnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -203,6 +213,34 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
         }
     }
 
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == 120) {
+            makeCurrentFragment(AddProductFragment(this, this.product))
+        }
+        if (item.itemId == 121) {
+            db.collection(collectionName).document(product.Nombre).delete()
+        }
+        if (item.itemId == 122) {
+            makeCurrentFragment(AddOfferFragment(this, this.offer))
+        }
+        if (item.itemId == 123) {
+            db.collection(collectionName).document(offer.Nombre).delete()
+        }
+        if (item.itemId == 124) {
+            makeCurrentFragment(AddCategoryFragment(this, this.category))
+        }
+        if (item.itemId == 125) {
+            db.collection(collectionName).document(category.Nombre).delete()
+        }
+        if (item.itemId == 126) {
+            makeCurrentFragment(AddNotificationFragment(this, this.notification))
+        }
+        if (item.itemId == 127) {
+            db.collection(collectionName).document(this.notification.ID).delete()
+        }
+        return super.onContextItemSelected(item)
+    }
+
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         email = prefs.getString("email", null)
@@ -293,7 +331,8 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
                 "id" to p0,
                 "email" to email,
                 "products" to basketList,
-                "estado" to getString(R.string.waiting)
+                "estado" to getString(R.string.waiting),
+                "img" to imgUrl
             )
         )
     }
@@ -304,5 +343,25 @@ class MainActivity : AppCompatActivity(), PaymentResultListener {
 
     private fun setBasketObjects(list: List<ProductsDataClass>) {
         basketList = list as MutableList<ProductsDataClass>
+    }
+
+    fun setCollectionName(name: String) {
+        collectionName = name
+    }
+
+    fun setProduct(product: ProductsDataClass) {
+        this.product = product
+    }
+
+    fun setOffer(offer: OffersDataClass) {
+        this.offer = offer
+    }
+
+    fun setCategory(category: CategoryDataClass) {
+        this.category = category
+    }
+
+    fun setNotification(notification: NotificationDataClass) {
+        this.notification = notification
     }
 }

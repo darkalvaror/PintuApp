@@ -125,7 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
-        app:startIconDrawable="@drawable/ic_baseline_credit_card_24">
+        app:startIconDrawable="@drawable/ic_baseline_directions_run_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/creditCardNumber"

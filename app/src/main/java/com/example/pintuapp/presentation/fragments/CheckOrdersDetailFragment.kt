@@ -43,8 +43,9 @@ class CheckOrdersDetailFragment(val order: CheckOrdersDataClass) : Fragment() {
         binding.apply {
             emailText.text = order.email
             stateText.text = order.estado
-            Picasso.get().load(order.img).into(userImg2)
-
+            if (!order.img.isNullOrEmpty()) {
+                Picasso.get().load(order.img).into(userImg2)
+            }
             if (stateText.text == "Esperando aprobación") {
                 stateText.setTextColor(Color.YELLOW)
             } else if (stateText.text == "Denegado") {

@@ -108,4 +108,9 @@
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="details">Details</string>
+    <string name="out_stock">Out of stock</string>
+    <string name="text_out_stock">This product is out of stock</string>
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

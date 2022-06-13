@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.pintuapp.R
+import com.example.pintuapp.data.dataClass.CategoryDataClass
 import com.example.pintuapp.databinding.FragmentAddCategoryBinding
 import com.example.pintuapp.presentation.activities.MainActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,7 +17,7 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import kotlinx.android.synthetic.main.fragment_add_product.*
 
 
-class AddCategoryFragment(private val parentActivity: MainActivity) : Fragment() {
+class AddCategoryFragment(private val parentActivity: MainActivity, private val category: CategoryDataClass? = null) : Fragment() {
 
     private lateinit var binding: FragmentAddCategoryBinding
     private val db = FirebaseFirestore.getInstance()
@@ -36,6 +37,8 @@ class AddCategoryFragment(private val parentActivity: MainActivity) : Fragment()
         setCategoryOnDB()
 
         setBackgroundColor()
+
+        setText()
 
         binding.backButton6.setOnClickListener {
             parentActivity.supportFragmentManager.beginTransaction().apply {
@@ -67,6 +70,7 @@ class AddCategoryFragment(private val parentActivity: MainActivity) : Fragment()
     }
 
     private fun setBackgroundColor() {
+        var num = 1
         colorPickerView.setColorListener(ColorEnvelopeListener { envelope, fromUser ->
 
             binding.colorState.setOnClickListener {
@@ -82,6 +86,14 @@ class AddCategoryFragment(private val parentActivity: MainActivity) : Fragment()
             binding.textBackground.setText("#" + envelope.hexCode)
             binding.colorState.setBackgroundColor(envelope.color)
 
+            if (category != null) {
+                if (num == 1) {
+                    binding.textBackground.setText(category.Background)
+                    binding.colorState.setBackgroundColor(envelope.color)
+                    num = 0
+                }
+            }
+
             binding.okayText.setOnClickListener {
                 binding.colorPickerView.visibility = View.GONE
             }
@@ -91,5 +103,17 @@ class AddCategoryFragment(private val parentActivity: MainActivity) : Fragment()
     private fun isDarkModeOn(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    private fun setText() {
+        if (category != null) {
+            binding.apply {
+                textProductName.setText(category.Nombre)
+                textProductName.isEnabled = false
+                textBackground.setText(category.Background)
+                textImgUrl.setText(category.Img)
+                button4.text = parentActivity.getString(R.string.edit)
+            }
+        }
     }
 }
