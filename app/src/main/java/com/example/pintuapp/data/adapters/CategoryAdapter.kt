@@ -57,7 +57,10 @@ class CategoryAdapter(private var parentActivity: MainActivity, private var cate
             return@setOnLongClickListener false
         }
 
-        item.setOnCreateContextMenuListener(this)
+        if (BuildConfig.adminMode) {
+            item.setOnCreateContextMenuListener(this)
+        }
+
         if (category.Background.isNotEmpty()) {
             var buttonDrawable = background.background
             buttonDrawable = DrawableCompat.wrap(buttonDrawable)

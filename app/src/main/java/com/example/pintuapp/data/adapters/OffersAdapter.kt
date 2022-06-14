@@ -53,7 +53,10 @@ class OffersAdapter(private val parentActivity: MainActivity, private val offerL
             return@setOnLongClickListener false
         }
 
-        constraint.setOnCreateContextMenuListener(this)
+        if (BuildConfig.adminMode) {
+            constraint.setOnCreateContextMenuListener(this)
+        }
+
         text.text = offer.Nombre
         Picasso.get().load(offer.Img).into(image)
         if (offer.Background.isEmpty()) {

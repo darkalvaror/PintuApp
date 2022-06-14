@@ -50,7 +50,10 @@ class NotificationAdapter(private var parentActivity: MainActivity, private val 
             return@setOnLongClickListener false
         }
 
-        background.setOnCreateContextMenuListener(this)
+        if (BuildConfig.adminMode) {
+            background.setOnCreateContextMenuListener(this)
+        }
+
         title.text = notification.Titulo
         body.text = notification.Mensaje
 

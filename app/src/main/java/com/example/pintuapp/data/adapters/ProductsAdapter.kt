@@ -61,7 +61,10 @@ class ProductsAdapter(private val parentActivity: MainActivity, private var prod
             return@setOnLongClickListener false
         }
 
-        background.setOnCreateContextMenuListener(this)
+        if (BuildConfig.adminMode) {
+            background.setOnCreateContextMenuListener(this)
+        }
+
         name.text = products.Nombre
         price.text = products.Precio.toString() + "€"
         if (products.Img.isNotBlank()) {
